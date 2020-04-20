@@ -24,7 +24,5 @@ public class Ride {
 	public String toString() {
 		return "Ride [rid=" + rid + ", name=" + name + "]";
 	}
-	
-	
 
 }
