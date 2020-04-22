@@ -12,6 +12,19 @@ public class User {
 	private int aid;
 	private Rating rating;
 
+	public User() {
+	
+	}
+	
+	public User(String first_name, String last_name, String phone, String picture, boolean is_active) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.phone = phone;
+		this.picture = picture;
+		this.is_active = is_active;
+	}
+
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -31,21 +44,13 @@ public class User {
 	public int getAid() {
 		return aid;
 	}
+	
+	public Rating getRating() {
+		return rating;
+	}
 
 	public void setAid(int aid) {
 		this.aid = aid;
-	}
-
-	public User() {
-	}
-	
-	public User(String first_name, String last_name, String phone, String picture, boolean is_active) {
-		super();
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.phone = phone;
-		this.picture = picture;
-		this.is_active = is_active;
 	}
 
 	public boolean isIs_active() {
