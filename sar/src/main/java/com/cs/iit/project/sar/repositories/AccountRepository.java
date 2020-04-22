@@ -64,5 +64,18 @@ public class AccountRepository {
 		}
 		return null;
 	}
+
+	public List<User> searchAccounts(String key) {
+		List<User> userAccountsWithMatch = new ArrayList<User>();
+		String newKey = key.toLowerCase();
+			for(User u: users) {
+				if(u.getFirst_name().toLowerCase().contains(newKey) 
+						|| u.getLast_name().toLowerCase().contains(newKey)
+						|| u.getPhone().contains(newKey)) {
+					userAccountsWithMatch.add(u);
+				}
+			}
+		return userAccountsWithMatch;
+	}
 	
 }
