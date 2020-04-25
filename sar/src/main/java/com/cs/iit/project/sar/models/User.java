@@ -1,5 +1,7 @@
 package com.cs.iit.project.sar.models;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -10,7 +12,24 @@ public class User {
 	private String picture;
 	private boolean is_active;
 	private int aid;
-	private Rating rating;
+	private List<Rating> drivers_rating;
+	private List<Rating> riders_rating;
+
+	public List<Rating> getDrivers_rating() {
+		return drivers_rating;
+	}
+
+	public void setDrivers_rating(List<Rating> drivers_rating) {
+		this.drivers_rating = drivers_rating;
+	}
+
+	public List<Rating> getRiders_rating() {
+		return riders_rating;
+	}
+
+	public void setRiders_rating(List<Rating> riders_rating) {
+		this.riders_rating = riders_rating;
+	}
 
 	public User() {
 	
@@ -44,10 +63,6 @@ public class User {
 	public int getAid() {
 		return aid;
 	}
-	
-	public Rating getRating() {
-		return rating;
-	}
 
 	public void setAid(int aid) {
 		this.aid = aid;
@@ -76,9 +91,12 @@ public class User {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	
-	public void setRating(Rating rating) {
-		this.rating = rating;
+
+	public void setDriversRating(Rating rating) {
+		this.drivers_rating.add(rating);
 	}
 	
+	public void setRidersRating(Rating rating) {
+		this.riders_rating.add(rating);
+	}
 }

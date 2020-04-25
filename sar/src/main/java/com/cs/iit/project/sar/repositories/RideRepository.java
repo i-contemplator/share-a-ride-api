@@ -10,6 +10,7 @@ import java.util.Map;
 import com.cs.iit.project.sar.models.JoinRequest;
 import com.cs.iit.project.sar.models.Message;
 import com.cs.iit.project.sar.models.Ride;
+import com.cs.iit.project.sar.models.User;
 import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
 
 public class RideRepository {
@@ -19,6 +20,9 @@ public class RideRepository {
 	static Map<Integer, Message> messagesMap = new HashMap<Integer, Message>();
 	
 	public int createRide(Ride ride) {
+		for(User u: users) {
+			if ()
+		}
 		int rid;
 		rid = UniqueIdGenerator.generateUniqueID();
 		ride.setRid(rid);

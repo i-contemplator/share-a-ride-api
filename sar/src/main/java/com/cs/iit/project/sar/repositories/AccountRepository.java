@@ -3,7 +3,9 @@ package com.cs.iit.project.sar.repositories;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.cs.iit.project.sar.models.Rating;
 import com.cs.iit.project.sar.models.User;
@@ -11,54 +13,47 @@ import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
 
 public class AccountRepository {
 
-	static List<User> users = new ArrayList<>();
+	static Map<Integer, User> usersMap = new HashMap<Integer, User>();
 	
 	public int createAccount(User user) {
 		int aid = UniqueIdGenerator.generateUniqueID();
-		users.add(user);
 		user.setAid(aid);
+		usersMap.put(aid, user);
 		return aid;
 	}
 	
 	public void activateAccount(int aid, User user) {
-		for(User u : users) {
-			if (u.getAid() == aid) {
-				u.setIs_active(true);
-			}
+		if (usersMap.containsKey(aid) && user.isIs_active()){
+			usersMap.put(aid, user);
 		}
 	}
 
 	public void updateAccount(int aid, User user) {
-		for(User u : users) {
-			if (u.getAid() == aid) {
-				u.setFirst_name(user.getFirst_name());
-				u.setLast_name(user.getLast_name());
-				u.setPhone(user.getPhone());
-				u.setPicture(user.getPicture());
-				u.setIs_active(user.isIs_active());
-			}
+		if(usersMap.containsKey(aid)) {
+			usersMap.put(aid, user);
 		}
 	}
 
 	public void deleteAccount(int aid) {
-		for(User u : users) {
-			if (u.getAid() == aid) {
-				users.remove(u);
-			}	
-		}
+		usersMap.remove(aid);
 	}
 
 	public List<User> viewAllAccounts() {
-		return users;
+		return new ArrayList<User>(usersMap.values());
 	}
 
 	public Integer rateAccount(int aid, Rating rating) {
-		int sid = UniqueIdGenerator.generateUniqueID();
+		if(usersMap.containsKey(aid)) {
+			int sid = UniqueIdGenerator.generateUniqueID();
+			String dateCreated = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+			rating.setDate(dateCreated);
+			 
+		}
 		for(User u: users) {
 			if(u.getAid()==aid) {
 				String dateCreated = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 				rating.setDate(dateCreated);
-				u.setRating(rating);
+				u.setDriversRating(rating);
 				return sid;
 			}
 		}
@@ -66,6 +61,7 @@ public class AccountRepository {
 	}
 
 	public List<User> searchAccounts(String key) {
+		System.out.println("key value print in repo: " + key);
 		List<User> userAccountsWithMatch = new ArrayList<User>();
 		String newKey = key.toLowerCase();
 			for(User u: users) {
@@ -75,7 +71,26 @@ public class AccountRepository {
 					userAccountsWithMatch.add(u);
 				}
 			}
+		System.out.println(userAccountsWithMatch);
 		return userAccountsWithMatch;
+	}
+
+	public User viewDriverRatings(int aid) {
+		for(User u : users) {
+			if (u.getAid() == aid) {
+				return u;
+			}	
+		}
+		return null;
+	}
+	
+	public User viewRiderRatings(int aid) {
+		for(User u : users) {
+			if (u.getAid() == aid) {
+				return u;
+			}	
+		}
+		return null;
 	}
 	
 }

@@ -12,6 +12,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import org.json.JSONObject;
 
 import com.cs.iit.project.sar.models.Rating;
 import com.cs.iit.project.sar.models.User;
@@ -25,10 +29,13 @@ public class AccountResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String createAccount(User user) {
-		int num;
-		num = repo.createAccount(user);
-		return "{\n\t\"aid\": " + num + "\n}";
+	public Response createAccount(User user) {
+		int aid = repo.createAccount(user);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("aid", aid);
+		return Response.status(Status.CREATED)
+				.entity(jsonObject.toString())
+				.build();
 	}
 	
 	
@@ -61,8 +68,10 @@ public class AccountResource {
 	}
 	
 	@GET 
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> searchAccounts(@QueryParam("key") String key) {
+		System.out.println("Print key value in resource: " + key);
 		return repo.searchAccounts(key);
 	}
 	
@@ -74,5 +83,19 @@ public class AccountResource {
 		int sid;
 		sid = repo.rateAccount(aid, rating);
 		return "{\n\t\"sid\": " + sid + "\n}";
+	}
+	
+	@Path("{aid}/driver")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public User viewDriverRatings(@PathParam("aid") int aid) {
+		return repo.viewDriverRatings(aid);
+	}
+	
+	@Path("{aid}/rider")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public User viewRiderRatings(@PathParam("aid") int aid) {
+		return repo.viewRiderRatings(aid);
 	}
 }
