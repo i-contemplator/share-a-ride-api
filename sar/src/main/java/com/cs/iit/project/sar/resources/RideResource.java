@@ -11,6 +11,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -55,8 +56,15 @@ public class RideResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Ride> getAllRides() {
-		return repo.getAllRides();
+	public List<Ride> getAllRides(@QueryParam("from") String from, 
+									@QueryParam("to") String to,
+									@QueryParam("date") String date) {
+		if(from == null && to == null && date == null) {
+			return repo.getAllRides();
+		} else {
+			System.out.println(from + " " + to + " " + date);
+			return repo.searchRides(from, to, date);
+		}
 	}
 	
 	@GET
@@ -70,12 +78,13 @@ public class RideResource {
 	@Path("{rid}/join_requests")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String requestJoinRide(@PathParam("rid") int rid, JoinRequest joinRequest) {
-		System.out.println("Entered request Join Request...");
-		int jid;
-		jid = repo.requesetToJoinRide(rid, joinRequest);
-		System.out.println("AFter repo...");
-		return "{\n\t\"jid\": " + jid + "\n}";	
+	public Response requestJoinRide(@PathParam("rid") int rid, JoinRequest joinRequest) {
+		int jid = repo.requesetToJoinRide(rid, joinRequest);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("jid", jid);
+		return Response.status(Status.CREATED)
+				.entity(jsonObject.toString())
+				.build();	
 	}
 	
 //	@PATCH
@@ -83,7 +92,7 @@ public class RideResource {
 //	@Path("{rid}/join_requests/{jid}")
 //	public void respondToRideRequest(@PathParam("rid") int rid, @PathParam("jid") int jid, PatchData patched) {
 //		repo.respondToRideRequest(rid, jid, patched);
-//	}
+//	} 
 //	
 //	@PATCH
 //	@Consumes(MediaType.APPLICATION_JSON_PATCH_JSON)
@@ -96,10 +105,13 @@ public class RideResource {
 	@Path("{rid}/messages")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String addMessage(@PathParam("rid") int rid, Message message) {
-		int mid;
-		mid = repo.addMessage(rid, message);
-		return "{\n\t\"mid\": " + mid + "\n}";	
+	public Response addMessage(@PathParam("rid") int rid, Message message) {
+		int mid = repo.addMessage(rid, message);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("mid", mid);
+		return Response.status(Status.CREATED)
+				.entity(jsonObject.toString())
+				.build();	
 	}
 	
 	@GET

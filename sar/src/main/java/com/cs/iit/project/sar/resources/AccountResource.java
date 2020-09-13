@@ -2,6 +2,8 @@ package com.cs.iit.project.sar.resources;
 
 import java.util.List;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,7 +27,7 @@ import com.cs.iit.project.sar.repositories.AccountRepository;
 public class AccountResource {
 
 	AccountRepository repo = new AccountRepository();
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -33,6 +35,7 @@ public class AccountResource {
 		int aid = repo.createAccount(user);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("aid", aid);
+		
 		return Response.status(Status.CREATED)
 				.entity(jsonObject.toString())
 				.build();
@@ -44,6 +47,7 @@ public class AccountResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void activeAccount(@PathParam("aid") int aid, User user) {
+		user.setAid(aid);
 		repo.activateAccount(aid, user);
 	}
 	
@@ -52,6 +56,7 @@ public class AccountResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateAccount(@PathParam("aid") int aid, User user) {
+		user.setAid(aid);
 		repo.updateAccount(aid, user);
 	}
 	
@@ -71,7 +76,9 @@ public class AccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> searchAccounts(@QueryParam("key") String key) {
-		System.out.println("Print key value in resource: " + key);
+		if(key == null) {
+			return repo.viewAllAccounts();
+		}
 		return repo.searchAccounts(key);
 	}
 	
@@ -79,23 +86,26 @@ public class AccountResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String rateAccount(@PathParam("aid") int aid, Rating rating) {
-		int sid;
-		sid = repo.rateAccount(aid, rating);
-		return "{\n\t\"sid\": " + sid + "\n}";
+	public Response rateAccount(@PathParam("aid") int aid, Rating rating) {
+		Integer sid = repo.rateAccount(aid, rating);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("sid", sid);
+		return Response.status(Status.CREATED)
+				.entity(jsonObject.toString())
+				.build();
 	}
 	
 	@Path("{aid}/driver")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public User viewDriverRatings(@PathParam("aid") int aid) {
+	public List<Rating> viewDriverRatings(@PathParam("aid") int aid) {
 		return repo.viewDriverRatings(aid);
 	}
 	
 	@Path("{aid}/rider")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public User viewRiderRatings(@PathParam("aid") int aid) {
+	public List<Rating> viewRiderRatings(@PathParam("aid") int aid) {
 		return repo.viewRiderRatings(aid);
 	}
 }

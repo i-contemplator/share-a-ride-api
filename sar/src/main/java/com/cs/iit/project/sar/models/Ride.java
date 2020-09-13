@@ -2,18 +2,25 @@ package com.cs.iit.project.sar.models;
 
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Ride {
 	private int aid;
-	private LocationInfo location_info;
-	private DateTime date_time;
-	private Car car_info;
-	private int max_passengers;
-	private float amount_per_passenger;
+	@JsonbProperty("location_info")
+	private LocationInfo locationInfo;
+	@JsonbProperty("date_time")
+	private DateTime dateTime;
+	@JsonbProperty("car_info")
+	private Car carInfo;
+	@JsonbProperty("max_passengers")
+	private int maxPassengers;
+	@JsonbProperty("amount_per_passenger")
+	private float amountPerPassenger;
 	private String conditions;
 	private int rid;
+	@JsonbProperty("join_requests")
 	private List<JoinRequest> joinRequests;
 	private List<Message> messages;
 
@@ -21,15 +28,15 @@ public class Ride {
 		
 	}
 	
-	public Ride(int aid, LocationInfo location_info, DateTime date_time, Car car_info, int max_passengers,
-			float amount_per_passenger, String conditions) {
+	public Ride(int aid, LocationInfo locationInfo, DateTime dateTime, Car carInfo, int maxPassengers,
+			float amountPerPassenger, String conditions) {
 		super();
 		this.aid = aid;
-//		this.location_info = location_info;
-//		this.date_time = date_time;
-//		this.car_info = car_info;
-		this.max_passengers = max_passengers;
-		this.amount_per_passenger = amount_per_passenger;
+		this.locationInfo = locationInfo;
+		this.dateTime = dateTime;
+		this.carInfo = carInfo;
+		this.maxPassengers = maxPassengers;
+		this.amountPerPassenger = amountPerPassenger;
 		this.conditions = conditions;
 	}
 	
@@ -41,44 +48,44 @@ public class Ride {
 		this.aid = aid;
 	}
 
-	public LocationInfo getLocation_info() {
-		return location_info;
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
 	}
 
-	public void setLocation_info(LocationInfo location_info) {
-		this.location_info = location_info;
+	public void setLocationInfo(LocationInfo locationInfo) {
+		this.locationInfo = locationInfo;
 	}
 
-	public DateTime getDate_time() {
-		return date_time;
+	public DateTime getDateTime() {
+		return dateTime;
 	}
 
-	public void setDate_time(DateTime date_time) {
-		this.date_time = date_time;
+	public void setDateTime(DateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
-	public Car getCar_info() {
-		return car_info;
+	public Car getCarInfo() {
+		return carInfo;
 	}
 
-	public void setCar_info(Car car_info) {
-		this.car_info = car_info;
+	public void setCarInfo(Car carInfo) {
+		this.carInfo = carInfo;
 	}
 
-	public int getMax_passengers() {
-		return max_passengers;
+	public int getMaxPassengers() {
+		return maxPassengers;
 	}
 
-	public void setMax_passengers(int max_passengers) {
-		this.max_passengers = max_passengers;
+	public void setMaxPassengers(int maxPassengers) {
+		this.maxPassengers = maxPassengers;
 	}
 
-	public float getAmount_per_passenger() {
-		return amount_per_passenger;
+	public float getAmountPerPassenger() {
+		return amountPerPassenger;
 	}
 
-	public void setAmount_per_passenger(float amount_per_passenger) {
-		this.amount_per_passenger = amount_per_passenger;
+	public void setAmountPerPassenger(float amountPerPassenger) {
+		this.amountPerPassenger = amountPerPassenger;
 	}
 
 	public String getConditions() {

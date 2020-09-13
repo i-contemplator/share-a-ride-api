@@ -1,19 +1,20 @@
 package com.cs.iit.project.sar.models;
 
 public class Message {
+	
+	private int mid;
 	private int aid;
 	private String msg;
 	private String date;
-	private int mid;
 	
 	public Message() {
 		
 	}
 	
-	public Message(int aid, String msg) {
+	public Message(String msg, int aid) {
 		super();
-		this.aid = aid;
 		this.msg = msg;
+		this.aid = aid;
 	}
 	
 	public int getMid() {

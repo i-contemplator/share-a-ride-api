@@ -1,28 +1,38 @@
 package com.cs.iit.project.sar.models;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.xml.bind.annotation.XmlElement;
 
+@JsonbNillable
 public class JoinRequest {
 
+	private int jid;
 	private int aid;
 	private int passengers;
-	@JsonbProperty(nillable=true)
-	private boolean ride_confirmed;
-	@JsonbProperty(nillable=true)
-	private boolean pickup_confirmed;
-	private int jid;
+	@JsonbProperty("ride_confirmed")
+	private Boolean rideConfirmed;
+	@JsonbProperty("pickup_confirmed")
+	private Boolean pickupConfirmed;
 	
 	public JoinRequest() {
 		
 	}
 	
-	public JoinRequest(int aid, int passengers/*, boolean ride_confirmed, boolean pickup_confirmed*/) {
+	public JoinRequest(int aid, int passengers, boolean rideConfirmed, boolean pickupConfirmed) {
 		super();
 		this.aid = aid;
 		this.passengers = passengers;
-//		this.ride_confirmed = ride_confirmed;
-//		this.pickup_confirmed = pickup_confirmed;
+		this.rideConfirmed = rideConfirmed;
+		this.pickupConfirmed = pickupConfirmed;
+	}
+	
+	public int getJid() {
+		return jid;
+	}
+
+	public void setJid(int jid) {
+		this.jid = jid;
 	}
 	
 	public int getAid() {
@@ -37,25 +47,17 @@ public class JoinRequest {
 	public void setPassengers(int passengers) {
 		this.passengers = passengers;
 	}
-	public boolean isRide_confirmed() {
-		return ride_confirmed;
+	public Boolean isRideConfirmed() {
+		return rideConfirmed;
 	}
-	public void setRide_confirmed(boolean ride_confirmed) {
-		this.ride_confirmed = ride_confirmed;
+	public void setRideConfirmed(Boolean rideConfirmed) {
+		this.rideConfirmed = rideConfirmed;
 	}
-	public boolean isPickup_confirmed() {
-		return pickup_confirmed;
+	public Boolean isPickupConfirmed() {
+		return pickupConfirmed;
 	}
-	public void setPickup_confirmed(boolean pickup_confirmed) {
-		this.pickup_confirmed = pickup_confirmed;
-	}
-	
-	public int getJid() {
-		return jid;
-	}
-
-	public void setJid(int jid) {
-		this.jid = jid;
+	public void setPickupConfirmed(Boolean pickupConfirmed) {
+		this.pickupConfirmed = pickupConfirmed;
 	}
 
 }

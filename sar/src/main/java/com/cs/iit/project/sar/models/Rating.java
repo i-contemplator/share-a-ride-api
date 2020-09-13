@@ -1,21 +1,24 @@
 package com.cs.iit.project.sar.models;
 
+import javax.json.bind.annotation.JsonbProperty;
+
 public class Rating {
+	private int sid;
 	private int rid;
-	private int sent_by_id;
+	@JsonbProperty("sent_by_id")
+	private int sentById;
 	private int rating;
 	private String comment;
-	private int sid;
 	private String date;
 
 	public Rating() {
 		
 	}
 	
-	public Rating(int rid, int sent_by_id, int rating, String comment) {
+	public Rating(int rid, int sentById, int rating, String comment) {
 		super();
 		this.rid = rid;
-		this.sent_by_id = sent_by_id;
+		this.sentById = sentById;
 		this.rating = rating;
 		this.comment = comment;
 	}
@@ -28,12 +31,12 @@ public class Rating {
 		this.rid = rid;
 	}
 
-	public int getSent_by_id() {
-		return sent_by_id;
+	public int getSentById() {
+		return sentById;
 	}
 
-	public void setSent_by_id(int sent_by_id) {
-		this.sent_by_id = sent_by_id;
+	public void setSentById(int sentById) {
+		this.sentById = sentById;
 	}
 
 	public int getRating() {

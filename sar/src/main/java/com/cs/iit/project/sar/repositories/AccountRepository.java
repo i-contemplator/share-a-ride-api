@@ -7,14 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cs.iit.project.sar.data.DataClass;
 import com.cs.iit.project.sar.models.Rating;
 import com.cs.iit.project.sar.models.User;
 import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
 
 public class AccountRepository {
 
-	static Map<Integer, User> usersMap = new HashMap<Integer, User>();
-	
+	private Map<Integer, User> usersMap = DataClass.getUsersMap();
+
 	public int createAccount(User user) {
 		int aid = UniqueIdGenerator.generateUniqueID();
 		user.setAid(aid);
@@ -23,7 +24,7 @@ public class AccountRepository {
 	}
 	
 	public void activateAccount(int aid, User user) {
-		if (usersMap.containsKey(aid) && user.isIs_active()){
+		if (usersMap.containsKey(aid) && user.isActive()){
 			usersMap.put(aid, user);
 		}
 	}
@@ -41,54 +42,64 @@ public class AccountRepository {
 	public List<User> viewAllAccounts() {
 		return new ArrayList<User>(usersMap.values());
 	}
+	
+	public List<User> searchAccounts(String key) {
+		List<User> userAccountsWithMatch = new ArrayList<User>();
+		String newKey = key.toLowerCase();
+			for(Map.Entry<Integer, User> user : usersMap.entrySet()) {
+				Integer userKey = user.getKey();
+				User userValue = user.getValue();
+				String userAid = String.valueOf(userValue.getAid());
+				String userFN = userValue.getFirstName().toLowerCase();
+				String userLN = userValue.getLastName().toLowerCase();
+				String userPN = userValue.getPhone();
+				String userPic = userValue.getPicture();
+				if(newKey.contains(userAid) ||
+						newKey.contains(userFN) ||
+						newKey.contains(userLN) || 
+						newKey.contains(userPN) || 
+						newKey.contains(userPic)) {
+					userAccountsWithMatch.add(userValue);
+				}
+			}
+//			for(Map.Entry<Integer, User> user : usersMap.entrySet()) {
+//				String userToString = user.getValue().toString();
+//				if(newKey.contains(userToString)) {
+//					userAccountsWithMatch.add(user.getValue());
+//				}
+//			}
+		return userAccountsWithMatch;
+	}
 
 	public Integer rateAccount(int aid, Rating rating) {
+	
 		if(usersMap.containsKey(aid)) {
+			User findUser = usersMap.get(aid);
 			int sid = UniqueIdGenerator.generateUniqueID();
 			String dateCreated = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 			rating.setDate(dateCreated);
-			 
-		}
-		for(User u: users) {
-			if(u.getAid()==aid) {
-				String dateCreated = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-				rating.setDate(dateCreated);
-				u.setDriversRating(rating);
-				return sid;
+			if(findUser.getRatings() == null) {
+				List<Rating> userRating = new ArrayList<Rating>();
+				userRating.add(rating);
+				findUser.setRatings(userRating);
+			} else {
+				findUser.getRatings().add(rating);
 			}
+			return sid;
 		}
 		return null;
 	}
 
-	public List<User> searchAccounts(String key) {
-		System.out.println("key value print in repo: " + key);
-		List<User> userAccountsWithMatch = new ArrayList<User>();
-		String newKey = key.toLowerCase();
-			for(User u: users) {
-				if(u.getFirst_name().toLowerCase().contains(newKey) 
-						|| u.getLast_name().toLowerCase().contains(newKey)
-						|| u.getPhone().contains(newKey)) {
-					userAccountsWithMatch.add(u);
-				}
-			}
-		System.out.println(userAccountsWithMatch);
-		return userAccountsWithMatch;
-	}
-
-	public User viewDriverRatings(int aid) {
-		for(User u : users) {
-			if (u.getAid() == aid) {
-				return u;
-			}	
+	public List<Rating> viewDriverRatings(int aid) {
+		if(usersMap.containsKey(aid)) {
+			return usersMap.get(aid).getRatings();
 		}
 		return null;
 	}
 	
-	public User viewRiderRatings(int aid) {
-		for(User u : users) {
-			if (u.getAid() == aid) {
-				return u;
-			}	
+	public List<Rating> viewRiderRatings(int aid) {
+		if(usersMap.containsKey(aid)) {
+			return usersMap.get(aid).getRatings();
 		}
 		return null;
 	}

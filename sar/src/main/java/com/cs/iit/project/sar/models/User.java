@@ -1,55 +1,47 @@
 package com.cs.iit.project.sar.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class User {
-	private String first_name;
-	private String last_name;
+	@JsonbProperty("first_name")
+	private String firstName;
+	@JsonbProperty("last_name")
+	private String lastName;
 	private String phone;
 	private String picture;
-	private boolean is_active;
+	@JsonbProperty("is_active")
+	private boolean active;
 	private int aid;
-	private List<Rating> drivers_rating;
-	private List<Rating> riders_rating;
-
-	public List<Rating> getDrivers_rating() {
-		return drivers_rating;
-	}
-
-	public void setDrivers_rating(List<Rating> drivers_rating) {
-		this.drivers_rating = drivers_rating;
-	}
-
-	public List<Rating> getRiders_rating() {
-		return riders_rating;
-	}
-
-	public void setRiders_rating(List<Rating> riders_rating) {
-		this.riders_rating = riders_rating;
-	}
-
+	@JsonbProperty("detail")
+	private List<Rating> ratings;
+//	private List<Rating> driversRating;
+//	private List<Rating> ridersRating;
+	
 	public User() {
-	
+		
 	}
 	
-	public User(String first_name, String last_name, String phone, String picture, boolean is_active) {
+	public User(String firstName, String lastName, String phone, String picture, boolean isActive) {
 		super();
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.phone = phone;
 		this.picture = picture;
-		this.is_active = is_active;
+		this.active = isActive;
+		this.ratings = new ArrayList<Rating>();
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
 	public String getPhone() {
@@ -68,20 +60,20 @@ public class User {
 		this.aid = aid;
 	}
 
-	public boolean isIs_active() {
-		return is_active;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setIs_active(boolean is_active) {
-		this.is_active = is_active;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) { 
+		this.lastName = lastName; 
 	}
 
 	public void setPhone(String phone) {
@@ -92,11 +84,18 @@ public class User {
 		this.picture = picture;
 	}
 
-	public void setDriversRating(Rating rating) {
-		this.drivers_rating.add(rating);
+	public List<Rating> getRatings() {
+		return ratings;
 	}
-	
-	public void setRidersRating(Rating rating) {
-		this.riders_rating.add(rating);
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
 	}
+
+	@Override
+	public String toString() {
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", picture=" + picture
+				+ ", active=" + active + ", aid=" + aid + "]";
+	}
+
 }
