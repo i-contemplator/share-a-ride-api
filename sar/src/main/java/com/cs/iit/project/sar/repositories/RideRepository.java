@@ -7,17 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cs.iit.project.sar.data.DataClass;
 import com.cs.iit.project.sar.models.JoinRequest;
 import com.cs.iit.project.sar.models.Message;
-import com.cs.iit.project.sar.models.PatchRideRequestConfirm;
 import com.cs.iit.project.sar.models.Ride;
 import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
 
 public class RideRepository {
 
-	static Map<Integer, Ride> ridesMap = new HashMap<Integer, Ride>();
-	static Map<Integer, JoinRequest> joinRequestsMap = new HashMap<Integer, JoinRequest>();
-	static Map<Integer, Message> messagesMap = new HashMap<Integer, Message>();
+	private Map<Integer, Ride> ridesMap = DataClass.getRidesMap();
+	private Map<Integer, JoinRequest> joinRequestsMap = DataClass.getJoinRequestsMap();
+	private Map<Integer, Message> messagesMap = DataClass.getMessagesMap();
 	
 	public int createRide(Ride ride) {
 		int rid = UniqueIdGenerator.generateUniqueID();

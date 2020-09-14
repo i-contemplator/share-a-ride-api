@@ -20,7 +20,6 @@ import org.json.JSONObject;
 
 import com.cs.iit.project.sar.models.JoinRequest;
 import com.cs.iit.project.sar.models.Message;
-import com.cs.iit.project.sar.models.PatchRideRequestConfirm;
 import com.cs.iit.project.sar.models.Ride;
 import com.cs.iit.project.sar.repositories.RideRepository;
 
