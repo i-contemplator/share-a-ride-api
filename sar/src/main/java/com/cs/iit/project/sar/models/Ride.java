@@ -1,6 +1,7 @@
 package com.cs.iit.project.sar.models;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,7 +22,7 @@ public class Ride {
 	private String conditions;
 	private int rid;
 	@JsonbProperty("join_requests")
-	private List<JoinRequest> joinRequests;
+	private Map<Integer, JoinRequest> joinRequests;
 	private List<Message> messages;
 
 	public Ride() {
@@ -104,11 +105,11 @@ public class Ride {
 		this.rid = rid;
 	}
 	
-	public List<JoinRequest> getJoinRequests() {
+	public Map<Integer, JoinRequest> getJoinRequests() {
 		return joinRequests;
 	}
 
-	public void setJoinRequests(List<JoinRequest> joinRequests) {
+	public void setJoinRequests(Map<Integer, JoinRequest> joinRequests) {
 		this.joinRequests = joinRequests;
 	}
 	

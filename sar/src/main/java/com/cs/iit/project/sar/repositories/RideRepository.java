@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.cs.iit.project.sar.models.JoinRequest;
 import com.cs.iit.project.sar.models.Message;
+import com.cs.iit.project.sar.models.PatchRideRequestConfirm;
 import com.cs.iit.project.sar.models.Ride;
 import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
 
@@ -65,24 +66,38 @@ public class RideRepository {
 		return searchDate(date);
 	}	
 
-	public int requesetToJoinRide(int rid, JoinRequest joinRequest) {
+	public int requestToJoinRide(int rid, JoinRequest joinRequest) {
 		int jid = UniqueIdGenerator.generateUniqueID();
 		joinRequest.setJid(jid);
-		System.out.println("Hello before!");
 		joinRequestsMap.put(jid, joinRequest);
-		System.out.println("Hello after!");
 		Ride ride = ridesMap.get(rid);
 		if(ride.getJoinRequests() == null) {
-			List<JoinRequest> rideJoinRequests = new ArrayList<JoinRequest>();
-			rideJoinRequests.add(joinRequest);
+			Map<Integer, JoinRequest> rideJoinRequests = new HashMap<Integer, JoinRequest>();
+			rideJoinRequests.put(jid, joinRequest);
 			ride.setJoinRequests(rideJoinRequests);
 			ridesMap.put(rid, ride);
 		} else {
-			ride.getJoinRequests().add(joinRequest);
+			ride.getJoinRequests().put(jid, joinRequest);
 		}
 		return jid;	
 	}
-
+	
+	public void respondToRideRequest(int rid, int jid, JoinRequest patchRideRequestConfirm) {
+		Ride ride = ridesMap.get(rid);
+		JoinRequest joinRequest = joinRequestsMap.get(jid);
+		joinRequest.setRideConfirmed(patchRideRequestConfirm.isRideConfirmed());
+		joinRequestsMap.put(jid, joinRequest);
+		ride.getJoinRequests().put(jid, joinRequest);
+	}
+	
+	public void confirmPassengerPickup(int rid, int  jid, JoinRequest confirmRidePickup) {
+		Ride ride = ridesMap.get(rid);
+		JoinRequest joinRequest = joinRequestsMap.get(jid);
+		joinRequest.setPickupConfirmed(confirmRidePickup.isPickupConfirmed());
+		joinRequestsMap.put(jid, joinRequest);
+		ride.getJoinRequests().put(jid, joinRequest);
+	}
+	
 	public int addMessage(int rid, Message message) {
 		int mid = UniqueIdGenerator.generateUniqueID();
 		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import com.cs.iit.project.sar.models.JoinRequest;
 import com.cs.iit.project.sar.models.Message;
+import com.cs.iit.project.sar.models.PatchRideRequestConfirm;
 import com.cs.iit.project.sar.models.Ride;
 import com.cs.iit.project.sar.repositories.RideRepository;
 
@@ -79,7 +80,7 @@ public class RideResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response requestJoinRide(@PathParam("rid") int rid, JoinRequest joinRequest) {
-		int jid = repo.requesetToJoinRide(rid, joinRequest);
+		int jid = repo.requestToJoinRide(rid, joinRequest);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("jid", jid);
 		return Response.status(Status.CREATED)
@@ -87,19 +88,17 @@ public class RideResource {
 				.build();	
 	}
 	
-//	@PATCH
-//	@Consumes(MediaType.APPLICATION_JSON_PATCH_JSON)
-//	@Path("{rid}/join_requests/{jid}")
-//	public void respondToRideRequest(@PathParam("rid") int rid, @PathParam("jid") int jid, PatchData patched) {
-//		repo.respondToRideRequest(rid, jid, patched);
-//	} 
-//	
-//	@PATCH
-//	@Consumes(MediaType.APPLICATION_JSON_PATCH_JSON)
-//	@Path("{rid}/join_requests/{jid}")
-//	public void confirmPassengerPickup(@PathParam("rid") int rid, @PathParam("jid") int jid, PatchData patched) {
-//		repo.confirmPassengerPickup(rid, jid, patched);
-//	}
+	@PATCH
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("{rid}/join_requests/{jid}")
+	public void respondToRideRequest(@PathParam("rid") int rid, @PathParam("jid") int jid, JoinRequest patchJoinRequest) {
+		if(patchJoinRequest.isRideConfirmed() != null) {
+			repo.respondToRideRequest(rid, jid, patchJoinRequest);
+		}
+		if(patchJoinRequest.isPickupConfirmed() != null) {
+			repo.confirmPassengerPickup(rid, jid, patchJoinRequest);
+		}
+	} 
 	
 	@POST
 	@Path("{rid}/messages")
