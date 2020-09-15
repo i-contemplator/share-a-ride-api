@@ -2,8 +2,6 @@ package com.cs.iit.project.sar.resources;
 
 import java.util.List;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,16 +29,14 @@ public class AccountResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createAccount(User user) {
+	public Response createAccount(User user) {	
 		int aid = repo.createAccount(user);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("aid", aid);
-		
 		return Response.status(Status.CREATED)
 				.entity(jsonObject.toString())
 				.build();
 	}
-	
 	
 	@Path("{aid}/status")
 	@PUT

@@ -17,6 +17,7 @@ public class AccountRepository {
 	private Map<Integer, User> usersMap = DataClass.getUsersMap();
 
 	public int createAccount(User user) {
+		
 		int aid = UniqueIdGenerator.generateUniqueID();
 		user.setAid(aid);
 		usersMap.put(aid, user);
