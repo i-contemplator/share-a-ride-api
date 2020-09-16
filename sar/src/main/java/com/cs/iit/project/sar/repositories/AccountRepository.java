@@ -3,11 +3,11 @@ package com.cs.iit.project.sar.repositories;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.cs.iit.project.sar.data.DataClass;
+import com.cs.iit.project.sar.exception.FieldDataMissingException;
 import com.cs.iit.project.sar.models.Rating;
 import com.cs.iit.project.sar.models.User;
 import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
@@ -17,7 +17,9 @@ public class AccountRepository {
 	private Map<Integer, User> usersMap = DataClass.getUsersMap();
 
 	public int createAccount(User user) {
-		
+		if(user.getFirstName() == null) {
+			throw new FieldDataMissingException("First name missing");
+		}
 		int aid = UniqueIdGenerator.generateUniqueID();
 		user.setAid(aid);
 		usersMap.put(aid, user);

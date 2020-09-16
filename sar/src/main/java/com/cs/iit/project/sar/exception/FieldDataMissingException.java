@@ -11,6 +11,7 @@ public class FieldDataMissingException extends BadRequestException{
 
 	public FieldDataMissingException(String message) {
 		super(message);
+		System.out.println("Hello in exception class");
 	}
 
 }
