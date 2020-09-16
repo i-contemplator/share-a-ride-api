@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cs.iit.project.sar.data.DataClass;
+import com.cs.iit.project.sar.exception.DataNotFoundException;
 import com.cs.iit.project.sar.exception.FieldDataMissingException;
 import com.cs.iit.project.sar.models.Rating;
 import com.cs.iit.project.sar.models.User;
@@ -17,8 +18,32 @@ public class AccountRepository {
 	private Map<Integer, User> usersMap = DataClass.getUsersMap();
 
 	public int createAccount(User user) {
-		if(user.getFirstName() == null) {
-			throw new FieldDataMissingException("First name missing");
+		if(user.getFirstName() == null){
+			throw new NullPointerException("The first name appears to be uninitialized.");
+		}
+		if(user.getFirstName().isBlank()) {
+			throw new FieldDataMissingException("The first name appears to be missing");
+		}
+		if(user.getLastName() == null){
+			throw new NullPointerException("The last name appears to be uninitialized");
+		}
+		if(user.getLastName().isBlank()) {
+			throw new FieldDataMissingException("The last name appears to be missing");
+		}
+		if(user.getPhone() == null) {
+			throw new NullPointerException("The phone number appears to be uninitialized");
+		}
+		if(user.getPhone().isBlank()) {
+			throw new FieldDataMissingException("The phone number appears to be missing");
+		}
+		if(user.getPicture() == null) {
+			throw new NullPointerException("The picture appears to be uninitialized");
+		}
+		if(user.getPicture().isBlank()) {
+			throw new FieldDataMissingException("The picture appears to be missing");
+		}
+		if(user.isActive() == null) {
+			throw new NullPointerException("The phone number appears to be uninitialized");
 		}
 		int aid = UniqueIdGenerator.generateUniqueID();
 		user.setAid(aid);
@@ -27,18 +52,83 @@ public class AccountRepository {
 	}
 	
 	public void activateAccount(int aid, User user) {
+		
+		if(!usersMap.containsKey(aid)) {
+			throw new DataNotFoundException("The account identified by [" + aid + "] doesn't exist");
+		}
+		if(user.getFirstName() == null){
+			throw new NullPointerException("The first name appears to be uninitialized.");
+		}
+		if(user.getFirstName().isBlank()) {
+			throw new FieldDataMissingException("The first name appears to be missing");
+		}
+		if(user.getLastName() == null){
+			throw new NullPointerException("The last name appears to be uninitialized");
+		}
+		if(user.getLastName().isBlank()) {
+			throw new FieldDataMissingException("The last name appears to be missing");
+		}
+		if(user.getPhone() == null) {
+			throw new NullPointerException("The phone number appears to be uninitialized");
+		}
+		if(user.getPhone().isBlank()) {
+			throw new FieldDataMissingException("The phone number appears to be missing");
+		}
+		if(user.getPicture() == null) {
+			throw new NullPointerException("The picture appears to be uninitialized");
+		}
+		if(user.getPicture().isBlank()) {
+			throw new FieldDataMissingException("The picture appears to be missing");
+		}
+		if(user.isActive() == null) {
+			throw new NullPointerException("The phone number appears to be uninitialized");
+		}
 		if (usersMap.containsKey(aid) && user.isActive()){
 			usersMap.put(aid, user);
 		}
 	}
 
 	public void updateAccount(int aid, User user) {
+		
+		if(!usersMap.containsKey(aid)) {
+			throw new DataNotFoundException("The account identified by [" + aid + "] doesn't exist");
+		}
+		if(user.getFirstName() == null){
+			throw new NullPointerException("The first name appears to be uninitialized.");
+		}
+		if(user.getFirstName().isBlank()) {
+			throw new FieldDataMissingException("The first name appears to be missing");
+		}
+		if(user.getLastName() == null){
+			throw new NullPointerException("The last name appears to be uninitialized");
+		}
+		if(user.getLastName().isBlank()) {
+			throw new FieldDataMissingException("The last name appears to be missing");
+		}
+		if(user.getPhone() == null) {
+			throw new NullPointerException("The phone number appears to be uninitialized");
+		}
+		if(user.getPhone().isBlank()) {
+			throw new FieldDataMissingException("The phone number appears to be missing");
+		}
+		if(user.getPicture() == null) {
+			throw new NullPointerException("The picture appears to be uninitialized");
+		}
+		if(user.getPicture().isBlank()) {
+			throw new FieldDataMissingException("The picture appears to be missing");
+		}
+		if(user.isActive() == null) {
+			throw new NullPointerException("The phone number appears to be uninitialized");
+		}
 		if(usersMap.containsKey(aid)) {
 			usersMap.put(aid, user);
 		}
 	}
 
 	public void deleteAccount(int aid) {
+		if(!usersMap.containsKey(aid)) {
+			throw new DataNotFoundException("The account identified by [" + aid + "] doesn't exist");
+		}
 		usersMap.remove(aid);
 	}
 
@@ -50,7 +140,6 @@ public class AccountRepository {
 		List<User> userAccountsWithMatch = new ArrayList<User>();
 		String newKey = key.toLowerCase();
 			for(Map.Entry<Integer, User> user : usersMap.entrySet()) {
-				Integer userKey = user.getKey();
 				User userValue = user.getValue();
 				String userAid = String.valueOf(userValue.getAid());
 				String userFN = userValue.getFirstName().toLowerCase();
@@ -76,6 +165,15 @@ public class AccountRepository {
 
 	public Integer rateAccount(int aid, Rating rating) {
 	
+		if(rating.getRid() == null) {
+			throw new NullPointerException("The ride appears to be uninitialized");
+		}
+		if(rating.getSentById() == null) {
+			throw new NullPointerException("The sent_by_id appears to be uninitialized");
+		}
+		if(rating.getRating() == null) {
+			throw new NullPointerException("The rating appears to be uninitialized");
+		}
 		if(usersMap.containsKey(aid)) {
 			User findUser = usersMap.get(aid);
 			int sid = UniqueIdGenerator.generateUniqueID();

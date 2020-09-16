@@ -1,4 +1,4 @@
-package com.cs.iit.project.sar.repositories.response;
+package com.cs.iit.project.sar.exception;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;

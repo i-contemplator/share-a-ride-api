@@ -8,7 +8,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.cs.iit.project.sar.repositories.response.ExceptionResponseMaker;
+import com.cs.iit.project.sar.exception.ExceptionResponseMaker;
 
 @Provider
 public class ProcessingExceptionMapper implements ExceptionMapper<ProcessingException>{

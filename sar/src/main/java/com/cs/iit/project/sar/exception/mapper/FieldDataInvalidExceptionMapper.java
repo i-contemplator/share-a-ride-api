@@ -7,8 +7,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import com.cs.iit.project.sar.exception.ExceptionResponseMaker;
 import com.cs.iit.project.sar.exception.FieldDataInvalidException;
-import com.cs.iit.project.sar.repositories.response.ExceptionResponseMaker;
 
 @Provider
 public class FieldDataInvalidExceptionMapper implements ExceptionMapper<FieldDataInvalidException> {

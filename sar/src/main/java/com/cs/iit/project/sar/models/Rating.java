@@ -4,10 +4,10 @@ import javax.json.bind.annotation.JsonbProperty;
 
 public class Rating {
 	private int sid;
-	private int rid;
+	private Integer rid;
 	@JsonbProperty("sent_by_id")
-	private int sentById;
-	private int rating;
+	private Integer sentById;
+	private Integer rating;
 	private String comment;
 	private String date;
 
@@ -15,7 +15,7 @@ public class Rating {
 		
 	}
 	
-	public Rating(int rid, int sentById, int rating, String comment) {
+	public Rating(Integer rid, Integer sentById, Integer rating, String comment) {
 		super();
 		this.rid = rid;
 		this.sentById = sentById;
@@ -23,27 +23,27 @@ public class Rating {
 		this.comment = comment;
 	}
 	
-	public int getRid() {
+	public Integer getRid() {
 		return rid;
 	}
 
-	public void setRid(int rid) {
+	public void setRid(Integer rid) {
 		this.rid = rid;
 	}
 
-	public int getSentById() {
+	public Integer getSentById() {
 		return sentById;
 	}
 
-	public void setSentById(int sentById) {
+	public void setSentById(Integer sentById) {
 		this.sentById = sentById;
 	}
 
-	public int getRating() {
+	public Integer getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
 

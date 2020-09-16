@@ -15,7 +15,7 @@ public class User {
 	private String phone;
 	private String picture;
 	@JsonbProperty("is_active")
-	private boolean active;
+	private Boolean active;
 	private int aid;
 	@JsonbProperty("detail")
 	private List<Rating> ratings;
@@ -26,7 +26,7 @@ public class User {
 		
 	}
 	
-	public User(String firstName, String lastName, String phone, String picture, boolean isActive) {
+	public User(String firstName, String lastName, String phone, String picture, Boolean isActive) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -60,11 +60,11 @@ public class User {
 		this.aid = aid;
 	}
 
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 

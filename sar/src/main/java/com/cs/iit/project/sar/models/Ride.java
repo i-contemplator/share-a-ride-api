@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Ride {
-	private int aid;
+	private Integer aid;
 	@JsonbProperty("location_info")
 	private LocationInfo locationInfo;
 	@JsonbProperty("date_time")
@@ -16,11 +16,11 @@ public class Ride {
 	@JsonbProperty("car_info")
 	private Car carInfo;
 	@JsonbProperty("max_passengers")
-	private int maxPassengers;
+	private Integer maxPassengers;
 	@JsonbProperty("amount_per_passenger")
-	private float amountPerPassenger;
+	private Double amountPerPassenger;
 	private String conditions;
-	private int rid;
+	private Integer rid;
 	@JsonbProperty("join_requests")
 	private Map<Integer, JoinRequest> joinRequests;
 	private List<Message> messages;
@@ -29,8 +29,8 @@ public class Ride {
 		
 	}
 	
-	public Ride(int aid, LocationInfo locationInfo, DateTime dateTime, Car carInfo, int maxPassengers,
-			float amountPerPassenger, String conditions) {
+	public Ride(Integer aid, LocationInfo locationInfo, DateTime dateTime, Car carInfo, Integer maxPassengers,
+			Double amountPerPassenger, String conditions) {
 		super();
 		this.aid = aid;
 		this.locationInfo = locationInfo;
@@ -41,11 +41,11 @@ public class Ride {
 		this.conditions = conditions;
 	}
 	
-	public int getAid() {
+	public Integer getAid() {
 		return aid;
 	}
 
-	public void setAid(int aid) {
+	public void setAid(Integer aid) {
 		this.aid = aid;
 	}
 
@@ -73,19 +73,19 @@ public class Ride {
 		this.carInfo = carInfo;
 	}
 
-	public int getMaxPassengers() {
+	public Integer getMaxPassengers() {
 		return maxPassengers;
 	}
 
-	public void setMaxPassengers(int maxPassengers) {
+	public void setMaxPassengers(Integer maxPassengers) {
 		this.maxPassengers = maxPassengers;
 	}
 
-	public float getAmountPerPassenger() {
+	public Double getAmountPerPassenger() {
 		return amountPerPassenger;
 	}
 
-	public void setAmountPerPassenger(float amountPerPassenger) {
+	public void setAmountPerPassenger(Double amountPerPassenger) {
 		this.amountPerPassenger = amountPerPassenger;
 	}
 
@@ -97,11 +97,11 @@ public class Ride {
 		this.conditions = conditions;
 	}
 	
-	public int getRid() {
+	public Integer getRid() {
 		return rid;
 	}
 
-	public void setRid(int rid) {
+	public void setRid(Integer rid) {
 		this.rid = rid;
 	}
 	

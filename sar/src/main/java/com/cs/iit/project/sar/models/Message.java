@@ -3,7 +3,7 @@ package com.cs.iit.project.sar.models;
 public class Message {
 	
 	private int mid;
-	private int aid;
+	private Integer aid;
 	private String msg;
 	private String date;
 	
@@ -11,7 +11,7 @@ public class Message {
 		
 	}
 	
-	public Message(String msg, int aid) {
+	public Message(String msg, Integer aid) {
 		super();
 		this.msg = msg;
 		this.aid = aid;
@@ -23,10 +23,10 @@ public class Message {
 	public void setMid(int mid) {
 		this.mid = mid;
 	}
-	public int getAid() {
+	public Integer getAid() {
 		return aid;
 	}
-	public void setAid(int aid) {
+	public void setAid(Integer aid) {
 		this.aid = aid;
 	}
 	public String getMsg() {

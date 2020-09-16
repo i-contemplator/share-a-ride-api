@@ -7,8 +7,8 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import com.cs.iit.project.sar.exception.ExceptionResponseMaker;
 import com.cs.iit.project.sar.exception.FieldDataMissingException;
-import com.cs.iit.project.sar.repositories.response.ExceptionResponseMaker;
 
 @Provider
 public class FieldDataMissingExceptionMapper implements ExceptionMapper<FieldDataMissingException>{

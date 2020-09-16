@@ -2,14 +2,13 @@ package com.cs.iit.project.sar.models;
 
 import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbProperty;
-import javax.xml.bind.annotation.XmlElement;
 
 @JsonbNillable
 public class JoinRequest {
 
 	private int jid;
-	private int aid;
-	private int passengers;
+	private Integer aid;
+	private Integer passengers;
 	@JsonbProperty("ride_confirmed")
 	private Boolean rideConfirmed;
 	@JsonbProperty("pickup_confirmed")
@@ -19,7 +18,7 @@ public class JoinRequest {
 		
 	}
 	
-	public JoinRequest(int aid, int passengers, boolean rideConfirmed, boolean pickupConfirmed) {
+	public JoinRequest(Integer aid, Integer passengers, boolean rideConfirmed, boolean pickupConfirmed) {
 		super();
 		this.aid = aid;
 		this.passengers = passengers;
@@ -35,16 +34,16 @@ public class JoinRequest {
 		this.jid = jid;
 	}
 	
-	public int getAid() {
+	public Integer getAid() {
 		return aid;
 	}
-	public void setAid(int aid) {
+	public void setAid(Integer aid) {
 		this.aid = aid;
 	}
-	public int getPassengers() {
+	public Integer getPassengers() {
 		return passengers;
 	}
-	public void setPassengers(int passengers) {
+	public void setPassengers(Integer passengers) {
 		this.passengers = passengers;
 	}
 	public Boolean isRideConfirmed() {

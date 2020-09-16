@@ -1,47 +1,53 @@
 package com.cs.iit.project.sar.models;
 
+import javax.json.bind.annotation.JsonbProperty;
+
 public class LocationInfo {
 	
-	private String from_city;
-	private String from_zip;
-	private String to_city;
-	private String to_zip;
+	@JsonbProperty("from_city")
+	private String fromCity;
+	@JsonbProperty("from_zip")
+	private String fromZip;
+	@JsonbProperty("to_city")
+	private String toCity;
+	@JsonbProperty("to_zip")
+	private String toZip;
 	
 	public LocationInfo() {
 		
 	}
 	
-	public LocationInfo(String from_city, String from_zip, String to_city, String to_zip) {
+	public LocationInfo(String fromCity, String fromZip, String toCity, String toZip) {
 		super();
-		this.from_city = from_city;
-		this.from_zip = from_zip;
-		this.to_city = to_city;
-		this.to_zip = to_zip;
+		this.fromCity = fromCity;
+		this.fromZip = fromZip;
+		this.toCity = toCity;
+		this.toZip = toZip;
 	}
 	
-	public String getFrom_city() {
-		return from_city;
+	public String getFromCity() {
+		return fromCity;
 	}
-	public void setFrom_city(String from_city) {
-		this.from_city = from_city;
+	public void setFromCity(String fromCity) {
+		this.fromCity = fromCity;
 	}
-	public String getFrom_zip() {
-		return from_zip;
+	public String getFromZip() {
+		return fromZip;
 	}
-	public void setFrom_zip(String from_zip) {
-		this.from_zip = from_zip;
+	public void setFromZip(String fromZip) {
+		this.fromZip = fromZip;
 	}
-	public String getTo_city() {
-		return to_city;
+	public String getToCity() {
+		return toCity;
 	}
-	public void setTo_city(String to_city) {
-		this.to_city = to_city;
+	public void setToCity(String toCity) {
+		this.toCity = toCity;
 	}
-	public String getTo_zip() {
-		return to_zip;
+	public String getToZip() {
+		return toZip;
 	}
-	public void setTo_zip(String to_zip) {
-		this.to_zip = to_zip;
+	public void setToZip(String toZip) {
+		this.toZip = toZip;
 	}
 	
 }
