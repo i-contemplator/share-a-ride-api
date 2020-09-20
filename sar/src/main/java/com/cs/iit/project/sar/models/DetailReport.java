@@ -1,31 +1,31 @@
 package com.cs.iit.project.sar.models;
 
 public class DetailReport {
-	private String from_zip;
-	private String to_zip;
+	private String fromZip;
+	private String toZip;
 	private int count;
 	
 	public DetailReport() {
 		
 	}
 	
-	public DetailReport(String from_zip, String to_zip, int count) {
+	public DetailReport(String fromZip, String toZip, int count) {
 		super();
-		this.from_zip = from_zip;
-		this.to_zip = to_zip;
+		this.fromZip = fromZip;
+		this.toZip = toZip;
 		this.count = count;
 	}
-	public String getFrom_zip() {
-		return from_zip;
+	public String getFromZip() {
+		return fromZip;
 	}
-	public void setFrom_zip(String from_zip) {
-		this.from_zip = from_zip;
+	public void setFromZip(String fromZip) {
+		this.fromZip = fromZip;
 	}
-	public String getTo_zip() {
-		return to_zip;
+	public String getToZip() {
+		return toZip;
 	}
-	public void setTo_zip(String to_zip) {
-		this.to_zip = to_zip;
+	public void setToZip(String toZip) {
+		this.toZip = toZip;
 	}
 	public int getCount() {
 		return count;

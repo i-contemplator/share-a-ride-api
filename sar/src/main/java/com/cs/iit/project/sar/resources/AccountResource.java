@@ -1,5 +1,7 @@
 package com.cs.iit.project.sar.resources;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -11,15 +13,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONObject;
 
 import com.cs.iit.project.sar.models.Rating;
 import com.cs.iit.project.sar.models.User;
 import com.cs.iit.project.sar.repositories.AccountRepository;
+import com.cs.iit.project.sar.utilities.Location;
 
 @Path("accounts")
 public class AccountResource {
@@ -29,11 +35,15 @@ public class AccountResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createAccount(User user) {	
+	public Response createAccount(User user, @Context UriInfo uriInfo) {
+		
 		int aid = repo.createAccount(user);
+		String aidStr = String.valueOf(aid);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("aid", aid);
-		return Response.status(Status.CREATED)
+		
+		return Response.created(Location.getUri(uriInfo, aidStr))
+				.status(Status.CREATED)
 				.entity(jsonObject.toString())
 				.build();
 	}
@@ -82,11 +92,15 @@ public class AccountResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response rateAccount(@PathParam("aid") int aid, Rating rating) {
+	public Response rateAccount(@PathParam("aid") int aid, Rating rating, @Context UriInfo uriInfo) {
+		
 		Integer sid = repo.rateAccount(aid, rating);
+		String sidStr = String.valueOf(sid);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("sid", sid);
-		return Response.status(Status.CREATED)
+		
+		return Response.created(Location.getUri(uriInfo, sidStr))
+				.status(Status.CREATED)
 				.entity(jsonObject.toString())
 				.build();
 	}

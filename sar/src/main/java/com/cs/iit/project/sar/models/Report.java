@@ -5,8 +5,8 @@ import java.util.List;
 public class Report {
 	private int pid;
 	private String name;
-	private String start_date;
-	private String end_date;
+	private String startDate;
+	private String endDate;
 	private int rides;
 	private List<DetailReport> detail;
 	
@@ -14,12 +14,12 @@ public class Report {
 		
 	}
 	
-	public Report(int pid, String name, String start_date, String end_date, int rides, List<DetailReport> detail) {
+	public Report(int pid, String name, String startDate, String endDate, int rides, List<DetailReport> detail) {
 		super();
 		this.pid = pid;
 		this.name = name;
-		this.start_date = start_date;
-		this.end_date = end_date;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.rides = rides;
 		this.detail = detail;
 	}
@@ -36,17 +36,17 @@ public class Report {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getStart_date() {
-		return start_date;
+	public String getStartDate() {
+		return startDate;
 	}
-	public void setStart_date(String start_date) {
-		this.start_date = start_date;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
-	public String getEnd_date() {
-		return end_date;
+	public String getEndDate() {
+		return endDate;
 	}
-	public void setEnd_date(String end_date) {
-		this.end_date = end_date;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 	public int getRides() {
 		return rides;

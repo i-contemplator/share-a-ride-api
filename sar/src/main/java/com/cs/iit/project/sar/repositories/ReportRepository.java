@@ -23,8 +23,8 @@ public class ReportRepository {
 		Date endDate = sdf.parse(end_date);
 
 		for(Report report: reportsMap.values()) {
-			Date reportStartDate = sdf.parse(report.getStart_date());
-			Date reportEndDate = sdf.parse(report.getEnd_date());
+			Date reportStartDate = sdf.parse(report.getStartDate());
+			Date reportEndDate = sdf.parse(report.getEndDate());
 			if((reportStartDate.compareTo(startDate) > 0) && (reportEndDate.compareTo(endDate) > 0)) {
 				reportsBetweenDates.add(report);
 			}

@@ -9,10 +9,13 @@ import java.util.Map;
 
 import com.cs.iit.project.sar.data.DataClass;
 import com.cs.iit.project.sar.exception.DataNotFoundException;
+import com.cs.iit.project.sar.exception.FieldDataInvalidException;
 import com.cs.iit.project.sar.exception.FieldDataMissingException;
 import com.cs.iit.project.sar.models.JoinRequest;
 import com.cs.iit.project.sar.models.Message;
 import com.cs.iit.project.sar.models.Ride;
+import com.cs.iit.project.sar.models.User;
+import com.cs.iit.project.sar.repositories.validation.RideValidation;
 import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
 
 public class RideRepository {
@@ -20,11 +23,15 @@ public class RideRepository {
 	private Map<Integer, Ride> ridesMap = DataClass.getRidesMap();
 	private Map<Integer, JoinRequest> joinRequestsMap = DataClass.getJoinRequestsMap();
 	private Map<Integer, Message> messagesMap = DataClass.getMessagesMap();
+	private Map<Integer, User> usersMap = DataClass.getUsersMap();
 	
 	public int createRide(Ride ride) {
 		
 		if(ride.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
+		}
+		if(!usersMap.containsKey(ride.getAid())) {
+			throw new FieldDataInvalidException("Invalid aid");
 		}
 		if(ride.getLocationInfo() == null) {
 			throw new NullPointerException("The location_info appears to be uninitialized");
@@ -41,6 +48,11 @@ public class RideRepository {
 		if(ride.getLocationInfo().getToCity().isBlank()) {
 			throw new FieldDataMissingException("The to_city appears to be missing");
 		}
+		if(!RideValidation.isLocationInfoValid(ride.getLocationInfo())) {
+			if(RideValidation.getInvalidMessage() != null) {
+				throw new FieldDataInvalidException(RideValidation.getInvalidMessage());
+			}
+		}
 		if(ride.getDateTime() == null) {
 			throw new NullPointerException("The date_time appears to be uninitialized");
 		}
@@ -55,6 +67,12 @@ public class RideRepository {
 		}
 		if(ride.getDateTime().getTime().isBlank()) {
 			throw new FieldDataMissingException("The time appears to be missing");
+		}
+		if(!RideValidation.isDateTimeValid(ride.getDateTime())) {
+			String invalidMsg = RideValidation.getInvalidMessage();
+			if(invalidMsg != null) {
+				throw new FieldDataInvalidException(invalidMsg);
+			}
 		}
 		if(ride.getCarInfo() == null) {
 			throw new NullPointerException("The car_info appears to be uninitialized");
@@ -89,11 +107,23 @@ public class RideRepository {
 		if(ride.getCarInfo().getPlateSerial().isBlank()) {
 			throw new FieldDataMissingException("The car plate_serial appears to be missing");
 		}
+		if(!RideValidation.isCarInfoValid(ride.getCarInfo())) {
+			String invalidMsg = RideValidation.getInvalidMessage();
+			if(invalidMsg != null) {
+				throw new FieldDataInvalidException(invalidMsg);
+			}
+		}
 		if(ride.getMaxPassengers() == null) {
 			throw new NullPointerException("The max_passengers appears to be uninitialized");
 		}
+		if(!RideValidation.isMaxPassengersValid(ride.getMaxPassengers())) {
+			throw new FieldDataInvalidException("Invalid max_passengers");
+		}
 		if(ride.getAmountPerPassenger() == null) {
 			throw new NullPointerException("The amount_per_passenger appears to be uninitialized");
+		}
+		if(!RideValidation.isAmountPerPassengerValid(ride.getAmountPerPassenger())) {
+			throw new FieldDataInvalidException("Invalid amount_per_passenger");
 		}
 		if(ride.getConditions() == null) {
 			throw new NullPointerException("The conditions appears to be uninitialized");
@@ -116,6 +146,9 @@ public class RideRepository {
 		if(ride.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
 		}
+		if(!usersMap.containsKey(ride.getAid())) {
+			throw new FieldDataInvalidException("Invalid aid");
+		}
 		if(ride.getLocationInfo() == null) {
 			throw new NullPointerException("The location_info appears to be uninitialized");
 		}
@@ -131,6 +164,11 @@ public class RideRepository {
 		if(ride.getLocationInfo().getToCity().isBlank()) {
 			throw new FieldDataMissingException("The to_city appears to be missing");
 		}
+		if(!RideValidation.isLocationInfoValid(ride.getLocationInfo())) {
+			if(RideValidation.getInvalidMessage() != null) {
+				throw new FieldDataInvalidException(RideValidation.getInvalidMessage());
+			}
+		}
 		if(ride.getDateTime() == null) {
 			throw new NullPointerException("The date_time appears to be uninitialized");
 		}
@@ -145,6 +183,12 @@ public class RideRepository {
 		}
 		if(ride.getDateTime().getTime().isBlank()) {
 			throw new FieldDataMissingException("The time appears to be missing");
+		}
+		if(!RideValidation.isDateTimeValid(ride.getDateTime())) {
+			String invalidMsg = RideValidation.getInvalidMessage();
+			if(invalidMsg != null) {
+				throw new FieldDataInvalidException(invalidMsg);
+			}
 		}
 		if(ride.getCarInfo() == null) {
 			throw new NullPointerException("The car_info appears to be uninitialized");
@@ -179,11 +223,23 @@ public class RideRepository {
 		if(ride.getCarInfo().getPlateSerial().isBlank()) {
 			throw new FieldDataMissingException("The car plate_serial appears to be missing");
 		}
+		if(!RideValidation.isCarInfoValid(ride.getCarInfo())) {
+			String invalidMsg = RideValidation.getInvalidMessage();
+			if(invalidMsg != null) {
+				throw new FieldDataInvalidException(invalidMsg);
+			}
+		}
 		if(ride.getMaxPassengers() == null) {
 			throw new NullPointerException("The max_passengers appears to be uninitialized");
 		}
+		if(!RideValidation.isMaxPassengersValid(ride.getMaxPassengers())) {
+			throw new FieldDataInvalidException("Invalid max_passengers");
+		}
 		if(ride.getAmountPerPassenger() == null) {
 			throw new NullPointerException("The amount_per_passenger appears to be uninitialized");
+		}
+		if(!RideValidation.isAmountPerPassengerValid(ride.getAmountPerPassenger())) {
+			throw new FieldDataInvalidException("Invalid amount_per_passenger");
 		}
 		if(ride.getConditions() == null) {
 			throw new NullPointerException("The conditions appears to be uninitialized");
@@ -192,9 +248,8 @@ public class RideRepository {
 			throw new FieldDataMissingException("The conditions appears to be missing");
 		}
 		
-		if(ridesMap.containsKey(rid)) {
-			ridesMap.put(rid, ride);
-		}
+		ridesMap.put(rid, ride);
+		
 	}
 
 	public void deleteRide(int rid) {
@@ -244,14 +299,30 @@ public class RideRepository {
 		if(joinRequest.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
 		}
+		if(!ridesMap.containsKey(rid)) {
+			throw new DataNotFoundException("Ride id is invalid");
+		}
+		if(!usersMap.containsKey(joinRequest.getAid())) {
+			throw new FieldDataInvalidException("Invalid account id");
+		}
+		
+		Ride ride = ridesMap.get(rid);
 		if(joinRequest.getPassengers() == null) {
 			throw new NullPointerException("The passengers appears to be uninitialized");
+		}
+		if(!RideValidation.isPassengersToJoinValid(joinRequest.getPassengers(), ride.getMaxPassengers())) {
+			throw new FieldDataInvalidException("Invalid passengers amount");
+		}
+		if(joinRequest.isRideConfirmed() != null) {
+			throw new FieldDataInvalidException("Invalid value for ride_confirmed");
+		}
+		if(joinRequest.isPickupConfirmed() != null) {
+			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
 		}
 		
 		int jid = UniqueIdGenerator.generateUniqueID();
 		joinRequest.setJid(jid);
 		joinRequestsMap.put(jid, joinRequest);
-		Ride ride = ridesMap.get(rid);
 		if(ride.getJoinRequests() == null) {
 			Map<Integer, JoinRequest> rideJoinRequests = new HashMap<Integer, JoinRequest>();
 			rideJoinRequests.put(jid, joinRequest);
@@ -265,14 +336,30 @@ public class RideRepository {
 	
 	public void respondToRideRequest(int rid, int jid, JoinRequest patchRideRequestConfirm) {
 		
+		if(!ridesMap.containsKey(rid)) {
+			throw new DataNotFoundException("Ride does not exist");
+		}
+		if(!joinRequestsMap.containsKey(jid)) {
+			throw new DataNotFoundException("Join Request does not exist");
+		}
+		if(!usersMap.containsKey(patchRideRequestConfirm.getAid())) {
+			throw new DataNotFoundException("The account does not exist");
+		}
+		int aid = patchRideRequestConfirm.getAid();
+		Ride ride = ridesMap.get(rid);
+		if(ride.getAid() != aid) {
+			throw new FieldDataInvalidException("This account (" + aid + ") didn't create the ride (" + rid + ")");
+		}
 		if(patchRideRequestConfirm.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
 		}
 		if(patchRideRequestConfirm.isRideConfirmed() == null) {
 			throw new NullPointerException("The ride_confirmed appears to be uninitialized");
 		}
+//		if(patchRideRequestConfirm.isPickupConfirmed() != null) {
+//			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
+//		}
 		
-		Ride ride = ridesMap.get(rid);
 		JoinRequest joinRequest = joinRequestsMap.get(jid);
 		joinRequest.setRideConfirmed(patchRideRequestConfirm.isRideConfirmed());
 		joinRequestsMap.put(jid, joinRequest);
@@ -281,6 +368,20 @@ public class RideRepository {
 	
 	public void confirmPassengerPickup(int rid, int  jid, JoinRequest confirmRidePickup) {
 		
+		if(!ridesMap.containsKey(rid)) {
+			throw new DataNotFoundException("Ride does not exist");
+		}
+		if(!joinRequestsMap.containsKey(jid)) {
+			throw new DataNotFoundException("Join Request does not exist");
+		}
+		if(!usersMap.containsKey(confirmRidePickup.getAid())) {
+			throw new DataNotFoundException("The account does not exist");
+		}
+		int aid = confirmRidePickup.getAid();
+		Ride ride = ridesMap.get(rid);
+		if(ride.getAid() != aid) {
+			throw new FieldDataInvalidException("This account (" + aid + ") didn't create the ride (" + rid + ")");
+		}
 		if(confirmRidePickup.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
 		}
@@ -288,7 +389,6 @@ public class RideRepository {
 			throw new NullPointerException("The pickup_confirmed appears to be uninitialized");
 		}
 		
-		Ride ride = ridesMap.get(rid);
 		JoinRequest joinRequest = joinRequestsMap.get(jid);
 		joinRequest.setPickupConfirmed(confirmRidePickup.isPickupConfirmed());
 		joinRequestsMap.put(jid, joinRequest);
@@ -308,6 +408,13 @@ public class RideRepository {
 		}
 		if(message.getMsg().isBlank()) {
 			throw new FieldDataMissingException("The msg appears to be missing");
+		}
+		if(!usersMap.containsKey(message.getAid())) {
+			throw new DataNotFoundException("User does not exist");
+		}
+		User user = usersMap.get(message.getAid());
+		if(!user.isActive()) {
+			throw new FieldDataInvalidException("Account is not active");
 		}
 		
 		int mid = UniqueIdGenerator.generateUniqueID();

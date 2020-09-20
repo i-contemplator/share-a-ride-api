@@ -19,8 +19,8 @@ public class User {
 	private int aid;
 	@JsonbProperty("detail")
 	private List<Rating> ratings;
-//	private List<Rating> driversRating;
-//	private List<Rating> ridersRating;
+	private List<Rating> driversRating;
+	private List<Rating> ridersRating;
 	
 	public User() {
 		
@@ -90,6 +90,22 @@ public class User {
 
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
+	}
+
+	public List<Rating> getDriversRating() {
+		return driversRating;
+	}
+
+	public void setDriversRating(List<Rating> driversRating) {
+		this.driversRating = driversRating;
+	}
+
+	public List<Rating> getRidersRating() {
+		return ridersRating;
+	}
+
+	public void setRidersRating(List<Rating> ridersRating) {
+		this.ridersRating = ridersRating;
 	}
 
 	@Override
