@@ -1,13 +1,20 @@
 package com.cs.iit.project.sar.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @XmlRootElement
+@Data
+@NoArgsConstructor
+//@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class User {
+	
+	private Integer aid;
 	@JsonbProperty("first_name")
 	private String firstName;
 	@JsonbProperty("last_name")
@@ -16,98 +23,66 @@ public class User {
 	private String picture;
 	@JsonbProperty("is_active")
 	private Boolean active;
-	private int aid;
-	@JsonbProperty("detail")
-	private List<Rating> ratings;
+	@JsonbProperty("date_created")
+	private String dateCreated;
 	private List<Rating> driversRating;
-	private List<Rating> ridersRating;
+	private List<Rating> ridersRating;    
+	private int totalRidesAsRider;    
+	private int totalRidesAsDriver;   
+	@SuppressWarnings("unused")
+	private Integer totalRatingsAsRider;
+	@SuppressWarnings("unused")
+	private Integer totalRatingsAsDriver; 
+	@SuppressWarnings("unused")
+	private Double averageRatingAsRider;  
+	@SuppressWarnings("unused")
+	private Double averageRatingAsDriver; 
 	
-	public User() {
-		
-	}
-	
-	public User(String firstName, String lastName, String phone, String picture, Boolean isActive) {
+	public User(String firstName, String lastName, String phone, String picture, Boolean active,
+			Integer aid, List<Rating> driversRating, List<Rating> ridersRating,
+			String dateCreated) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
 		this.picture = picture;
-		this.active = isActive;
-		this.ratings = new ArrayList<Rating>();
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public String getPicture() {
-		return picture;
-	}
-
-	public int getAid() {
-		return aid;
-	}
-
-	public void setAid(int aid) {
-		this.aid = aid;
-	}
-
-	public Boolean isActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
 		this.active = active;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String lastName) { 
-		this.lastName = lastName; 
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-
-	public List<Rating> getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(List<Rating> ratings) {
-		this.ratings = ratings;
-	}
-
-	public List<Rating> getDriversRating() {
-		return driversRating;
-	}
-
-	public void setDriversRating(List<Rating> driversRating) {
+		this.aid = aid;
 		this.driversRating = driversRating;
-	}
-
-	public List<Rating> getRidersRating() {
-		return ridersRating;
-	}
-
-	public void setRidersRating(List<Rating> ridersRating) {
 		this.ridersRating = ridersRating;
+		this.dateCreated = dateCreated;
 	}
-
+	
+	public Integer getTotalRatingsAsRider() {
+		return this.ridersRating.size();
+	}
+	
+	public Integer getTotalRatingsAsDriver() {
+		if(this.driversRating == null) {
+			return 0;
+		}
+		return this.driversRating.size();
+	}
+	
+	public Double getAverageRatingAsRider() {
+		double total = 0;
+		for(Rating rating : this.ridersRating) {
+			total = total + rating.getRating();
+		}
+		return total/this.getTotalRatingsAsRider();
+	}
+	
+	public Double getAverageRatingAsDriver() {
+		if(this.driversRating == null) {
+			return 0.0;
+		}
+		double total = 0;
+		for(Rating rating : this.driversRating) {
+			total = total + rating.getRating();
+		}
+		return total/this.getTotalRatingsAsDriver();
+	}
+	
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", picture=" + picture

@@ -8,6 +8,15 @@
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>sar</name>
+    <properties>
+    	<jersey.version>2.30.1</jersey.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
+    	<org.mapstruct.version>1.4.0.CR1</org.mapstruct.version>
+    	<org.projectlombok.version>1.18.12</org.projectlombok.version>
+    </properties>
 
     <build>
         <finalName>sar</finalName>
@@ -19,6 +28,22 @@
                 <inherited>true</inherited>
                 <configuration>
                     <release>11</release>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <annotationProcessorPaths>
+	                    <path>
+		                    <groupId>org.mapstruct</groupId>
+						    <artifactId>mapstruct-processor</artifactId>
+						    <version>${org.mapstruct.version}</version>
+	                    </path>
+	                    
+	                     <path>
+	                        <groupId>org.projectlombok</groupId>
+	                        <artifactId>lombok</artifactId>
+	                        <version>${org.projectlombok.version}</version>
+	                     </path>
+	                     
+                </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
@@ -56,10 +81,25 @@
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20190722</version>
-		</dependency>    
+		</dependency>  
+		<dependency>
+		    <groupId>org.mapstruct</groupId>
+		    <artifactId>mapstruct</artifactId>
+		    <version>${org.mapstruct.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor 
+		<dependency>
+		    <groupId>org.mapstruct</groupId>
+		    <artifactId>mapstruct-processor</artifactId>
+		    <version>1.3.1.Final</version>
+		</dependency> -->
+		  
+		 <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${org.projectlombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+      
     </dependencies>
-    <properties>
-        <jersey.version>2.30.1</jersey.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

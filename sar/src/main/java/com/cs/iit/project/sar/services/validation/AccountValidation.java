@@ -1,4 +1,4 @@
-package com.cs.iit.project.sar.repositories.validation;
+package com.cs.iit.project.sar.services.validation;
 
 public class AccountValidation {
 	

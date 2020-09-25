@@ -1,7 +1,6 @@
 package com.cs.iit.project.sar.exception;
 
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
 
 public class DataNotFoundException extends NotFoundException {
 

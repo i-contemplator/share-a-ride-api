@@ -8,6 +8,7 @@ public class JoinRequest {
 
 	private int jid;
 	private Integer aid;
+	private Integer rid;
 	private Integer passengers;
 	@JsonbProperty("ride_confirmed")
 	private Boolean rideConfirmed;
@@ -34,6 +35,14 @@ public class JoinRequest {
 		this.jid = jid;
 	}
 	
+	public Integer getRid() {
+		return rid;
+	}
+
+	public void setRid(Integer rid) {
+		this.rid = rid;
+	}
+
 	public Integer getAid() {
 		return aid;
 	}

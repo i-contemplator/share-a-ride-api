@@ -1,13 +1,25 @@
-package com.cs.iit.project.sar.repositories;
+package com.cs.iit.project.sar.services;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.cs.iit.project.sar.data.DataClass;
+import com.cs.iit.project.sar.dto.mapper.JoinRequestMapper;
+import com.cs.iit.project.sar.dto.mapper.MessageMapper;
+import com.cs.iit.project.sar.dto.mapper.RideMapper;
+import com.cs.iit.project.sar.dto.request.JoinRequestRequest;
+import com.cs.iit.project.sar.dto.request.MessageRequest;
+import com.cs.iit.project.sar.dto.request.RideRequest;
+import com.cs.iit.project.sar.dto.response.AddMessageMidResponse;
+import com.cs.iit.project.sar.dto.response.CreateRideRidResponse;
+import com.cs.iit.project.sar.dto.response.JoinRequestJidResponse;
+import com.cs.iit.project.sar.dto.response.MessageResponse;
+import com.cs.iit.project.sar.dto.response.RideDetailResponse;
+import com.cs.iit.project.sar.dto.response.RideResponse;
+import com.cs.iit.project.sar.dto.response.ViewMessagesResponse;
+import com.cs.iit.project.sar.dto.response.ViewRidesResponse;
 import com.cs.iit.project.sar.exception.DataNotFoundException;
 import com.cs.iit.project.sar.exception.FieldDataInvalidException;
 import com.cs.iit.project.sar.exception.FieldDataMissingException;
@@ -15,17 +27,21 @@ import com.cs.iit.project.sar.models.JoinRequest;
 import com.cs.iit.project.sar.models.Message;
 import com.cs.iit.project.sar.models.Ride;
 import com.cs.iit.project.sar.models.User;
-import com.cs.iit.project.sar.repositories.validation.RideValidation;
+import com.cs.iit.project.sar.models.ViewRides;
+import com.cs.iit.project.sar.services.validation.RideValidation;
+import com.cs.iit.project.sar.utilities.DateCreated;
 import com.cs.iit.project.sar.utilities.UniqueIdGenerator;
 
-public class RideRepository {
+public class RideService {
 
 	private Map<Integer, Ride> ridesMap = DataClass.getRidesMap();
 	private Map<Integer, JoinRequest> joinRequestsMap = DataClass.getJoinRequestsMap();
 	private Map<Integer, Message> messagesMap = DataClass.getMessagesMap();
 	private Map<Integer, User> usersMap = DataClass.getUsersMap();
 	
-	public int createRide(Ride ride) {
+	public CreateRideRidResponse createRide(RideRequest rideRequest) {
+		
+		Ride ride = RideMapper.INSTANCE.fromRideRequestDto(rideRequest);
 		
 		if(ride.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
@@ -135,10 +151,13 @@ public class RideRepository {
 		int rid = UniqueIdGenerator.generateUniqueID();
 		ride.setRid(rid);
 		ridesMap.put(rid, ride);
-		return rid;
+		return RideMapper.INSTANCE.toCreateRideResponseDto(ride);
 	}
 
-	public void updateRide(int rid, Ride ride) {
+	public void updateRide(int rid, RideRequest rideRequest) {
+		
+		Ride ride = RideMapper.INSTANCE.fromRideRequestDto(rideRequest);
+		Ride existingRide = ridesMap.get(rid);
 		
 		if(!ridesMap.containsKey(rid)) {
 			throw new DataNotFoundException("The ride identified by [" + rid + "] doesn't exist");
@@ -148,6 +167,9 @@ public class RideRepository {
 		}
 		if(!usersMap.containsKey(ride.getAid())) {
 			throw new FieldDataInvalidException("Invalid aid");
+		}
+		if(ride.getAid() != existingRide.getAid()) {
+			throw new FieldDataInvalidException("Only the creator of the ride may change it");
 		}
 		if(ride.getLocationInfo() == null) {
 			throw new NullPointerException("The location_info appears to be uninitialized");
@@ -260,19 +282,15 @@ public class RideRepository {
 		ridesMap.remove(rid);
 	}
 
-	public List<Ride> getAllRides() {
-		return new ArrayList<Ride>(ridesMap.values());
-	}
-
-	public Ride getRide(int rid) {
-		
-		if(!ridesMap.containsKey(rid)) {
-			throw new DataNotFoundException("The ride identified by [" + rid + "] doesn't exist");
-		}
-		return ridesMap.get(rid);
+	public List<RideResponse> getAllRides() {
+		ViewRides viewRides = new ViewRides();
+		List<Ride> rides = new ArrayList<>(ridesMap.values());
+		viewRides.setRides(rides);
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(viewRides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
-	public List<Ride> searchRides(String from, String to, String date) {
+	public List<RideResponse> searchRides(String from, String to, String date) {
 		if(!from.isBlank()) {
 			if(!to.isBlank()) {
 				if(!date.isBlank()) {
@@ -294,35 +312,60 @@ public class RideRepository {
 		return searchDate(date);
 	}	
 
-	public int requestToJoinRide(int rid, JoinRequest joinRequest) {
+
+	public RideDetailResponse getRide(int rid) {
 		
-		if(joinRequest.getAid() == null) {
+		System.out.println("Junior 1");
+		if(!ridesMap.containsKey(rid)) {
+			System.out.println("Junior 2");
+			throw new DataNotFoundException("The ride identified by [" + rid + "] doesn't exist");
+		}
+		System.out.println("Junior 3");
+		Ride ride = ridesMap.get(rid);
+		if(!usersMap.containsKey(ride.getAid())) {
+			System.out.println("Junior 4");
+			throw new DataNotFoundException("The ride identified by [" + rid + "] doesn't exist");
+		}
+		System.out.println("Junior 5");
+		User user = usersMap.get(ride.getAid());
+		System.out.println("Junior 6");
+		return RideMapper.INSTANCE.toRideDetailDto(ride, user);
+	}
+	
+	public JoinRequestJidResponse requestToJoinRide(int rid, JoinRequestRequest joinRequestReq) {
+		
+		if(joinRequestReq.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
 		}
 		if(!ridesMap.containsKey(rid)) {
 			throw new DataNotFoundException("Ride id is invalid");
 		}
-		if(!usersMap.containsKey(joinRequest.getAid())) {
+		if(!usersMap.containsKey(joinRequestReq.getAid())) {
 			throw new FieldDataInvalidException("Invalid account id");
 		}
 		
 		Ride ride = ridesMap.get(rid);
-		if(joinRequest.getPassengers() == null) {
+		if(joinRequestReq.getPassengers() == null) {
 			throw new NullPointerException("The passengers appears to be uninitialized");
 		}
-		if(!RideValidation.isPassengersToJoinValid(joinRequest.getPassengers(), ride.getMaxPassengers())) {
+		if(!RideValidation.isPassengersToJoinValid(joinRequestReq.getPassengers(), ride.getMaxPassengers())) {
 			throw new FieldDataInvalidException("Invalid passengers amount");
 		}
-		if(joinRequest.isRideConfirmed() != null) {
+		if(joinRequestReq.getRideConfirmed() != null) {
 			throw new FieldDataInvalidException("Invalid value for ride_confirmed");
 		}
-		if(joinRequest.isPickupConfirmed() != null) {
+		if(joinRequestReq.getPickupConfirmed() != null) {
 			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
 		}
 		
 		int jid = UniqueIdGenerator.generateUniqueID();
+		JoinRequest joinRequest = JoinRequestMapper.INSTANCE.fromJoinRequestDto(joinRequestReq);
+		
+		joinRequest.setRid(rid);
 		joinRequest.setJid(jid);
+		
 		joinRequestsMap.put(jid, joinRequest);
+		
 		if(ride.getJoinRequests() == null) {
 			Map<Integer, JoinRequest> rideJoinRequests = new HashMap<Integer, JoinRequest>();
 			rideJoinRequests.put(jid, joinRequest);
@@ -331,10 +374,10 @@ public class RideRepository {
 		} else {
 			ride.getJoinRequests().put(jid, joinRequest);
 		}
-		return jid;	
+		return JoinRequestMapper.INSTANCE.toJoinResponseDto(joinRequest);	
 	}
 	
-	public void respondToRideRequest(int rid, int jid, JoinRequest patchRideRequestConfirm) {
+	public void respondToRideRequest(int rid, int jid, JoinRequestRequest patchRideRequestConfirm) {
 		
 		if(!ridesMap.containsKey(rid)) {
 			throw new DataNotFoundException("Ride does not exist");
@@ -353,20 +396,14 @@ public class RideRepository {
 		if(patchRideRequestConfirm.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
 		}
-		if(patchRideRequestConfirm.isRideConfirmed() == null) {
-			throw new NullPointerException("The ride_confirmed appears to be uninitialized");
-		}
-//		if(patchRideRequestConfirm.isPickupConfirmed() != null) {
-//			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
-//		}
 		
 		JoinRequest joinRequest = joinRequestsMap.get(jid);
-		joinRequest.setRideConfirmed(patchRideRequestConfirm.isRideConfirmed());
+		joinRequest.setRideConfirmed(patchRideRequestConfirm.getRideConfirmed());
 		joinRequestsMap.put(jid, joinRequest);
 		ride.getJoinRequests().put(jid, joinRequest);
 	}
 	
-	public void confirmPassengerPickup(int rid, int  jid, JoinRequest confirmRidePickup) {
+	public void confirmPassengerPickup(int rid, int  jid, JoinRequestRequest confirmRidePickup) {
 		
 		if(!ridesMap.containsKey(rid)) {
 			throw new DataNotFoundException("Ride does not exist");
@@ -378,24 +415,44 @@ public class RideRepository {
 			throw new DataNotFoundException("The account does not exist");
 		}
 		int aid = confirmRidePickup.getAid();
+		JoinRequest joinRequest = joinRequestsMap.get(jid);
 		Ride ride = ridesMap.get(rid);
-		if(ride.getAid() != aid) {
-			throw new FieldDataInvalidException("This account (" + aid + ") didn't create the ride (" + rid + ")");
+		if(joinRequest.getAid() != aid) {
+			throw new FieldDataInvalidException("This account (" + aid + ") has not requested to join this ride (" + rid + ")");
 		}
 		if(confirmRidePickup.getAid() == null) {
 			throw new NullPointerException("The aid appears to be uninitialized");
 		}
-		if(confirmRidePickup.isPickupConfirmed() == null) {
-			throw new NullPointerException("The pickup_confirmed appears to be uninitialized");
+		if(confirmRidePickup.getPickupConfirmed() == false) {
+			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
 		}
 		
-		JoinRequest joinRequest = joinRequestsMap.get(jid);
-		joinRequest.setPickupConfirmed(confirmRidePickup.isPickupConfirmed());
+		User rider = usersMap.get(aid);
+		User driver = usersMap.get(ride.getAid());
+		int totalRides = rider.getTotalRidesAsRider();
+		rider.setTotalRidesAsRider(totalRides + 1);
+		totalRides = driver.getTotalRidesAsDriver();
+		driver.setTotalRidesAsDriver(totalRides+1);
+		System.out.println(driver.getTotalRidesAsDriver() + "  " + rider.getTotalRidesAsRider());
+		
+		joinRequest.setPickupConfirmed(confirmRidePickup.getPickupConfirmed());
 		joinRequestsMap.put(jid, joinRequest);
+		if(ride.getRiders() == null) {
+			System.out.println("Riders null");
+			Map<Integer, User> riders = new HashMap<>();
+			riders.put(aid, rider);
+			ride.setRiders(riders);
+		} else {
+			System.out.println("Riders not null");
+			ride.getRiders().put(aid, rider);
+		}
 		ride.getJoinRequests().put(jid, joinRequest);
+		ride.setTripCompleted(true);
 	}
 	
-	public int addMessage(int rid, Message message) {
+	public AddMessageMidResponse addMessage(int rid, MessageRequest messageRequest) {
+		
+		Message message = MessageMapper.INSTANCE.fromMessageDto(messageRequest);
 		
 		if(!ridesMap.containsKey(rid)) {
 			throw new DataNotFoundException("The ride identified by [" + rid + "] doesn't exist");
@@ -413,16 +470,17 @@ public class RideRepository {
 			throw new DataNotFoundException("User does not exist");
 		}
 		User user = usersMap.get(message.getAid());
-		if(!user.isActive()) {
+		if(!user.getActive()) {
 			throw new FieldDataInvalidException("Account is not active");
 		}
 		
 		int mid = UniqueIdGenerator.generateUniqueID();
-		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 		message.setMid(mid);
-		message.setDate(date);
+		message.setDate(DateCreated.getDateOrTime("dd-MMM-yyyy, HH:mm:ss"));
+		
 		messagesMap.put(mid, message);
 		Ride ride = ridesMap.get(rid);
+		
 		if(ride.getMessages() == null) {
 			List<Message> rideMessages = new ArrayList<Message>();
 			rideMessages.add(message);
@@ -431,19 +489,20 @@ public class RideRepository {
 		} else {
 			ride.getMessages().add(message);
 		}
-		return mid;
+		return MessageMapper.INSTANCE.toMessageMidDto(message);
 	}
 
-	public List<Message> getAllMessages(int rid) {
+	public List<MessageResponse> getAllMessages(int rid) {
 		
 		if(!ridesMap.containsKey(rid)) {
 			throw new DataNotFoundException("The ride identified by [" + rid + "] doesn't exist");
 		}
 		Ride ride = ridesMap.get(rid);
-		return ride.getMessages();
+		ViewMessagesResponse messagesResponse = MessageMapper.INSTANCE.toAllMessagesDto(ride);
+		return new ArrayList<>(messagesResponse.getMessages());
 	}
 	
-	public List<Ride> searchFromToDate(String from, String to, String date) {
+	public List<RideResponse> searchFromToDate(String from, String to, String date) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -456,10 +515,13 @@ public class RideRepository {
 				matchedRides.add(currentRide);
 			}
 		}
-		return matchedRides;
+		ViewRides rides = new ViewRides();
+		rides.setRides(matchedRides);
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
-	public List<Ride> searchFromTo(String from, String to) {
+	public List<RideResponse> searchFromTo(String from, String to) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -470,10 +532,12 @@ public class RideRepository {
 				matchedRides.add(currentRide);
 			}
 		}
-		return matchedRides;
+		ViewRides rides = new ViewRides();
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
-	public List<Ride> searchFromDate(String from, String date) {
+	public List<RideResponse> searchFromDate(String from, String date) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -484,10 +548,12 @@ public class RideRepository {
 				matchedRides.add(currentRide);
 			}
 		}
-		return matchedRides;
+		ViewRides rides = new ViewRides();
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
-	public List<Ride> searchToDate(String to, String date) {
+	public List<RideResponse> searchToDate(String to, String date) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -498,10 +564,12 @@ public class RideRepository {
 				matchedRides.add(currentRide);
 			}
 		}
-		return matchedRides;
+		ViewRides rides = new ViewRides();
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
-	public List<Ride> searchFrom(String from) {
+	public List<RideResponse> searchFrom(String from) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -510,10 +578,12 @@ public class RideRepository {
 				matchedRides.add(currentRide);
 			}
 		}
-		return matchedRides;
+		ViewRides rides = new ViewRides();
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 
-	public List<Ride> searchTo(String to) {
+	public List<RideResponse> searchTo(String to) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -522,10 +592,12 @@ public class RideRepository {
 				matchedRides.add(currentRide);
 			}
 		}
-		return matchedRides;
+		ViewRides rides = new ViewRides();
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
-	public List<Ride> searchDate(String date) {
+	public List<RideResponse> searchDate(String date) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -534,7 +606,9 @@ public class RideRepository {
 				matchedRides.add(currentRide);
 			}
 		}
-		return matchedRides;
+		ViewRides rides = new ViewRides();
+		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+		return new ArrayList<>(ridesResponse.getRides());
 	}
 
 }

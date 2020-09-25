@@ -1,4 +1,4 @@
-package com.cs.iit.project.sar.repositories.validation;
+package com.cs.iit.project.sar.services.validation;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -20,17 +20,20 @@ public class RideValidation {
 		String date = dateTime.getDate();
 		String time = dateTime.getTime();
 		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-		
+		dateFormat.setLenient(false);
 		try {
 			dateFormat.parse(date);
 		} catch(ParseException exception) {
 			invalidMsg = "Invalid date";
+			return false;
 		}
 		dateFormat = new SimpleDateFormat("HH:mm");
+		dateFormat.setLenient(false);
 		try {
 			dateFormat.parse(time);
 		} catch(ParseException exception) {
 			invalidMsg = "Invalid time";
+			return false;
 		}
 		return true;
 	}

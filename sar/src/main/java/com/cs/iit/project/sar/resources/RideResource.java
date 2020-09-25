@@ -18,37 +18,40 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import org.json.JSONObject;
-
-import com.cs.iit.project.sar.models.JoinRequest;
-import com.cs.iit.project.sar.models.Message;
-import com.cs.iit.project.sar.models.Ride;
-import com.cs.iit.project.sar.repositories.RideRepository;
+import com.cs.iit.project.sar.dto.request.JoinRequestRequest;
+import com.cs.iit.project.sar.dto.request.MessageRequest;
+import com.cs.iit.project.sar.dto.request.RideRequest;
+import com.cs.iit.project.sar.dto.response.AddMessageMidResponse;
+import com.cs.iit.project.sar.dto.response.CreateRideRidResponse;
+import com.cs.iit.project.sar.dto.response.JoinRequestJidResponse;
+import com.cs.iit.project.sar.dto.response.MessageResponse;
+import com.cs.iit.project.sar.dto.response.RideDetailResponse;
+import com.cs.iit.project.sar.dto.response.RideResponse;
+import com.cs.iit.project.sar.dto.response.ViewMessagesResponse;
+import com.cs.iit.project.sar.services.RideService;
 import com.cs.iit.project.sar.utilities.Location;
 
 @Path("rides")
 public class RideResource {
 	
-	RideRepository repo = new RideRepository();
+	RideService repo = new RideService();
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createRide(Ride ride, @Context UriInfo uriInfo) {
-		int rid = repo.createRide(ride);
-		String ridStr = String.valueOf(rid);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("rid", rid);
+	public Response createRide(RideRequest ride, @Context UriInfo uriInfo) {
+		CreateRideRidResponse ridRequest = repo.createRide(ride);
+		String ridStr = String.valueOf(ridRequest.getRid());
 		return Response.created(Location.getUri(uriInfo, ridStr))
 				.status(Status.CREATED)
-				.entity(jsonObject.toString())
+				.entity(ridRequest)
 				.build();
 	}
 	
 	@PUT
 	@Path("{rid}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateRide(@PathParam("rid") int rid, Ride ride) {
+	public void updateRide(@PathParam("rid") int rid, RideRequest ride) {
 		repo.updateRide(rid, ride);
 	}
 	
@@ -60,10 +63,10 @@ public class RideResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Ride> getAllRides(@QueryParam("from") String from, 
+	public List<RideResponse> getAllRides(@QueryParam("from") String from, 
 									@QueryParam("to") String to,
 									@QueryParam("date") String date) {
-		if(from == null && to == null && date == null) {
+		if(from == null && to == null && date == null || from.isBlank() || to.isBlank() || date.isBlank()) {
 			return repo.getAllRides();
 		} else {
 			System.out.println(from + " " + to + " " + date);
@@ -74,7 +77,8 @@ public class RideResource {
 	@GET
 	@Path("{rid}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Ride getRide(@PathParam("rid") int rid) {
+	public RideDetailResponse getRide(@PathParam("rid") int rid) {
+		System.out.println("in getRide resource");
 		return repo.getRide(rid);
 	}
 	
@@ -82,48 +86,46 @@ public class RideResource {
 	@Path("{rid}/join_requests")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response requestJoinRide(@PathParam("rid") int rid, JoinRequest joinRequest, @Context UriInfo uriInfo) {
-		int jid = repo.requestToJoinRide(rid, joinRequest);
-		String jidStr = String.valueOf(jid);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("jid", jid);
+	public Response requestJoinRide(@PathParam("rid") int rid, JoinRequestRequest joinRequest, @Context UriInfo uriInfo) {
+		JoinRequestJidResponse jidResponse = repo.requestToJoinRide(rid, joinRequest);
+		String jidStr = String.valueOf(jidResponse.getJid());
+
 		return Response.created(Location.getUri(uriInfo, jidStr))
 				.status(Status.CREATED)
-				.entity(jsonObject.toString())
+				.entity(jidResponse)
 				.build();	
 	}
 	
 	@PATCH
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{rid}/join_requests/{jid}")
-	public void respondToRideRequest(@PathParam("rid") int rid, @PathParam("jid") int jid, JoinRequest patchJoinRequest) {
-		if(patchJoinRequest.isRideConfirmed() != null) {
+	public void respondToRideRequest(@PathParam("rid") int rid, @PathParam("jid") int jid, JoinRequestRequest patchJoinRequest) {
+		if(patchJoinRequest.getRideConfirmed() != null) {
 			repo.respondToRideRequest(rid, jid, patchJoinRequest);
 		}
-		if(patchJoinRequest.isPickupConfirmed() != null) {
+		if(patchJoinRequest.getPickupConfirmed() != null) {
 			repo.confirmPassengerPickup(rid, jid, patchJoinRequest);
-		}
+		} 
 	} 
 	
 	@POST
 	@Path("{rid}/messages")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addMessage(@PathParam("rid") int rid, Message message, @Context UriInfo uriInfo) {
-		int mid = repo.addMessage(rid, message);
-		String midStr = String.valueOf(mid);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("mid", mid);
+	public Response addMessage(@PathParam("rid") int rid, MessageRequest message, @Context UriInfo uriInfo) {
+		AddMessageMidResponse midResponse = repo.addMessage(rid, message);
+		String midStr = String.valueOf(midResponse.getMid());
+
 		return Response.created(Location.getUri(uriInfo, midStr))
 				.status(Status.CREATED)
-				.entity(jsonObject.toString())
+				.entity(midResponse)
 				.build();	
 	}
 	
 	@GET
 	@Path("{rid}/messages")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Message> getAllMessages(@PathParam("rid") int rid) {
+	public List<MessageResponse> getAllMessages(@PathParam("rid") int rid) {
 		return repo.getAllMessages(rid);
 	}
 	
