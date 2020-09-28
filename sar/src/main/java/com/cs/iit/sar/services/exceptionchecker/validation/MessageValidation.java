@@ -13,7 +13,7 @@ public class MessageValidation {
 	public static void validateActiveAccount(Integer aid) {
 		User user = usersMap.get(aid);
 		if(!user.getActive()) {
-			throw new FieldDataInvalidException("Account is not active");
+			throw new FieldDataInvalidException("account is not active");
 		}
 	}
 }

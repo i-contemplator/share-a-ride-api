@@ -3,15 +3,22 @@ package com.cs.iit.sar.models;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Message {
 	private int mid;
 	private Integer aid;
 	private String msg;
 	private String date;
+	
+	public Message(Integer aid, String msg) {
+		this.aid = aid;
+		this.msg = msg;
+	}
 	
 	public void setAid(Integer aid) {
 		if(aid == null) {

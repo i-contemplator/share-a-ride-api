@@ -1,10 +1,12 @@
 package com.cs.iit.sar.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Rating {
 	private int sid;
 	private Integer rid;
@@ -15,6 +17,12 @@ public class Rating {
 	private String date;
 	private String firstName;
 	
+	public Rating(int sid, Integer rid, Integer rating, Integer sentById) {
+		this.sid = sid;
+		this.rid = rid;
+		this.rating = rating;
+		this.sentById = sentById;
+	}
 	public void setRid(Integer rid) {
 		if(rid == null) {
 			throw new NullPointerException("rid appears to be null");

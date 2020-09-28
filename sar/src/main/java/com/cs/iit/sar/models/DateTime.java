@@ -2,11 +2,16 @@ package com.cs.iit.sar.models;
 
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class DateTime {
 	private String date;
 	private String time;

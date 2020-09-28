@@ -30,13 +30,13 @@ public class RideValidation {
 		validateToZip(locationInfo.getToZip());
 	}
 	
-	private static void validateFromZip(String fromZip) {
+	static void validateFromZip(String fromZip) {
 		if(fromZip.length() != 5) {
 			throw new FieldDataInvalidException("Invalid from_zip");
 		}
 	}
 	
-	private static void validateToZip(String toZip) {
+	static void validateToZip(String toZip) {
 		if(toZip.length() != 5) {
 			throw new FieldDataInvalidException("Invalid to_zip");
 		}
@@ -47,7 +47,7 @@ public class RideValidation {
 		validateTime(dateTime.getTime());
 	}
 	
-	private static void validateDate(String date) {
+	static void validateDate(String date) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 		dateFormat.setLenient(false);
 		try {
@@ -57,7 +57,7 @@ public class RideValidation {
 		}
 	}
 	
-	private static void validateTime(String time) {
+	static void validateTime(String time) {
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		dateFormat.setLenient(false);
 		try {
@@ -72,6 +72,12 @@ public class RideValidation {
 		if(plateSlate.length() > 2) {
 			throw new FieldDataInvalidException("Invalid plate_slate");
 		}
+		char[] charArray = plateSlate.toCharArray();
+		for(Character c : charArray) {
+			if(!Character.isUpperCase(c)) {
+				throw new FieldDataInvalidException("Invalid plate_slate");
+			}
+		}
 	}
 	
 	public static void validateMaxPassengers(Integer max) {
@@ -81,7 +87,7 @@ public class RideValidation {
 	}
 	
 	public static void validateAmountPerPassenger(Double amount) {
-		if(amount < 0) {
+		if(amount <= 0) {
 			throw new FieldDataInvalidException("Invalid amount_per_passenger");
 		}
 	}

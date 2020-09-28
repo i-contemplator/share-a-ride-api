@@ -46,6 +46,7 @@ public class AccountException {
 	}
 	
 	public static void isBothDriverOrRider(boolean isSenderDriver, boolean isReceiverRider) {
-		RatingValidation.validateBothDriverOrRider(isSenderDriver, isReceiverRider);
+		RatingValidation.validateBothDriver(isSenderDriver, isReceiverRider);
+		RatingValidation.validateBothRider(isSenderDriver, isReceiverRider);
 	}
 }

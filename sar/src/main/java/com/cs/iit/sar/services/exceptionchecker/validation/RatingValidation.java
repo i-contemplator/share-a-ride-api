@@ -49,13 +49,15 @@ public class RatingValidation {
 		}
 	}
 	
-	public static void validateBothDriverOrRider(boolean isSenderDriver, boolean isReceiverRider) {
+	public static void validateBothDriver(boolean isSenderDriver, boolean isReceiverRider) {
 		if((isSenderDriver == !isReceiverRider) && (isSenderDriver)) {
 			throw new FieldDataInvalidException("Both users cannot be a driver. Invalid data.");
-		}
+		}	
+	}
+	
+	public static void validateBothRider(boolean isSenderDriver, boolean isReceiverRider) {
 		if((isSenderDriver == !isReceiverRider) && (!isSenderDriver)) {
 			throw new FieldDataInvalidException("A rider cannot rate another rider. Invalid data.");
 		}
 	}
-	
 }

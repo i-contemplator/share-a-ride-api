@@ -2,17 +2,25 @@ package com.cs.iit.sar.models;
 
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Car {
 	private String make;
 	private String model;
 	private String color;
 	private String plateState;
 	private String plateSerial;	
+	
+	public Car(String plateState) {
+		this.plateState = plateState;
+	}
 	
 	public void setMake(String make) {
 		if(make == null) {

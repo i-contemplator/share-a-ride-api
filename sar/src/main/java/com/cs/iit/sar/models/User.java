@@ -7,11 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @XmlRootElement
 @Getter
 @Setter
+@NoArgsConstructor
 public class User {
 	
 	private Integer aid;
@@ -25,6 +27,15 @@ public class User {
 	private List<Rating> ridersRating;    
 	private int totalRidesAsRider;    
 	private int totalRidesAsDriver;   
+
+	public User(Integer aid, String firstName, String lastName, String phone, Boolean active) {
+		super();
+		this.aid = aid;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.active = active;
+	}
 	
 	public Integer getTotalRatingsAsRider() {
 		return this.ridersRating.size();
@@ -102,4 +113,5 @@ public class User {
 		}
 		this.active = active;
 	}
+
 }

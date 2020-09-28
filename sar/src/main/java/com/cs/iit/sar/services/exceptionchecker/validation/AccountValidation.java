@@ -34,7 +34,7 @@ public class AccountValidation {
 	}
 	
 	public static void validateActive(Boolean isActive) {
-		if(!isActive == true) {
+		if(isActive != true) {
 			throw new FieldDataInvalidException("Invalid value for is_active");
 		}
 	}

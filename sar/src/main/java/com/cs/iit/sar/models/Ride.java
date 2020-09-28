@@ -6,11 +6,13 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @XmlRootElement
 @Getter
 @Setter
+@NoArgsConstructor
 public class Ride {
 	private Integer rid;
 	private Integer aid;
@@ -24,6 +26,18 @@ public class Ride {
 	private Map<Integer, User> riders;
 	private List<Message> messages;
 	private boolean isTripCompleted;
+	
+	public Ride(Integer rid, Integer aid, LocationInfo locationInfo, DateTime dateTime, Car carInfo,
+			Integer maxPassengers, Double amountPerPassenger) {
+		super();
+		this.rid = rid;
+		this.aid = aid;
+		this.locationInfo = locationInfo;
+		this.dateTime = dateTime;
+		this.carInfo = carInfo;
+		this.maxPassengers = maxPassengers;
+		this.amountPerPassenger = amountPerPassenger;
+	}	
 	
 	public void setAid(Integer aid) {
 		if(aid == null) {
@@ -72,5 +86,6 @@ public class Ride {
 			throw new NullPointerException("conditions appears to be null");
 		}
 		this.conditions = conditions;
-	}	
+	}
+
 }

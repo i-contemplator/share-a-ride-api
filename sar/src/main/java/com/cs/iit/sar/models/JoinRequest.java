@@ -5,11 +5,13 @@ import javax.json.bind.annotation.JsonbNillable;
 import com.cs.iit.sar.exception.FieldDataInvalidException;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @JsonbNillable
+@NoArgsConstructor
 public class JoinRequest {
 	private int jid;
 	private Integer aid;
@@ -17,6 +19,17 @@ public class JoinRequest {
 	private Integer passengers;
 	private Boolean rideConfirmed;
 	private Boolean pickupConfirmed;
+
+	public JoinRequest(int jid, Integer aid, Integer rid, Integer passengers, Boolean rideConfirmed,
+			Boolean pickupConfirmed) {
+		super();
+		this.jid = jid;
+		this.aid = aid;
+		this.rid = rid;
+		this.passengers = passengers;
+		this.rideConfirmed = rideConfirmed;
+		this.pickupConfirmed = pickupConfirmed;
+	}
 	
 	public void setAid(Integer aid) {
 		if(aid == null) {
