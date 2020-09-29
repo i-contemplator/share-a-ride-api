@@ -30,9 +30,9 @@ class AccountExceptionTest extends AccountException {
 		usersMap = DataClass.getUsersMap();
 		ridesMap = DataClass.getRidesMap();
 		
-		user = new User(1, "Chintan", "Patel", "333-333-3334", true);
-		userUpdate = new User(2, "Chintan", "Patel", "333-333-3334", false);
-		userSentRating = new User(3, "Chintan", "Patel", "333-333-3334", true);
+		user = new User(1, "Chintan", "Patel", "333-333-3334", "chintan.com", true);
+		userUpdate = new User(2, "Chintan", "Patel", "333-333-3334", "chintan.com", false);
+		userSentRating = new User(3, "Chintan", "Patel", "333-333-3334", "chintan.com", true);
 		
 		rating = new Rating(1, 1, 4, 3);
 		Ride ride = new Ride();

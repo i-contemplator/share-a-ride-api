@@ -46,9 +46,6 @@ public class JoinRequest {
 	}
 	
 	public void setRideConfirmed(Boolean rideConfirmed) {
-		if(rideConfirmed != null) {
-			throw new FieldDataInvalidException("Invalid value for ride_confirmed");
-		}
 		this.rideConfirmed = rideConfirmed;
 	}
 	

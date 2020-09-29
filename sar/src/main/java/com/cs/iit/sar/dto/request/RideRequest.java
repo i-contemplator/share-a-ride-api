@@ -7,10 +7,12 @@ import com.cs.iit.sar.dto.response.DateTimeResponse;
 import com.cs.iit.sar.dto.response.LocationInfoResponse;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class RideRequest {
 	private Integer aid;
 	private Integer rid;
@@ -25,4 +27,18 @@ public class RideRequest {
 	@JsonbProperty("amount_per_passenger")
 	private Double amountPerPassenger;
 	private String conditions;
+	
+	public RideRequest(Integer aid, LocationInfoResponse locationInfo, DateTimeResponse dateTime, CarResponse carInfo,
+			Integer maxPassengers, Double amountPerPassenger, String conditions) {
+		super();
+		this.aid = aid;
+		this.locationInfo = locationInfo;
+		this.dateTime = dateTime;
+		this.carInfo = carInfo;
+		this.maxPassengers = maxPassengers;
+		this.amountPerPassenger = amountPerPassenger;
+		this.conditions = conditions;
+	}
+	
+	
 }

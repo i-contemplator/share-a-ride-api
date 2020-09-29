@@ -93,17 +93,18 @@ public class AccountService implements AccountBoundaryInterface, RatingBoundaryI
 		return new ArrayList<>(accounts.getAccounts());
 	}
 	
-	private boolean isKeyMatch(User user, String key) {
+	boolean isKeyMatch(User user, String key) {
+		key = key.toLowerCase();
 		String userAid = String.valueOf(user.getAid());
 		String userFN = user.getFirstName().toLowerCase();
 		String userLN = user.getLastName().toLowerCase();
 		String userPN = user.getPhone();
 		String userPic = user.getPicture();
-		if(key.contains(userAid) ||
-				key.contains(userFN) ||
-				key.contains(userLN) || 
-				key.contains(userPN) || 
-				key.contains(userPic)) {
+		if(userAid.contains(key) ||
+				userFN.contains(key) ||
+				userLN.contains(key) || 
+				userPN.contains(key) || 
+				userPic.contains(key)) {
 			return true;
 		} 
 		return false;
@@ -124,9 +125,9 @@ public class AccountService implements AccountBoundaryInterface, RatingBoundaryI
 
 		User userReceiver = usersMap.get(aid);
 		User userSender = usersMap.get(rating.getSentById());
-		
+				
 		Ride ride = ridesMap.get(rating.getRid());
-
+		
 		isSenderDriver = isDriver(ride.getAid(), userSender.getAid());
 		isReceiverDriver = isDriver(ride.getAid(), userReceiver.getAid());
 		isSenderRider = isRider(ride.getRiders(), userSender.getAid());
@@ -149,21 +150,21 @@ public class AccountService implements AccountBoundaryInterface, RatingBoundaryI
 		}
 	}
 	
-	private boolean isDriver(Integer rideCreatorId, Integer userId) {
+	boolean isDriver(Integer rideCreatorId, Integer userId) {
 		if(rideCreatorId == userId) {
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean isRider(Map<Integer, User> riders, Integer userId) {
+	boolean isRider(Map<Integer, User> riders, Integer userId) {
 		if(riders.containsKey(userId)) {
 			return true;
 		}
 		return false;
 	}
 
-	private RateAccountSidResponse addRatingForDriver(User user, Rating rating) {
+	RateAccountSidResponse addRatingForDriver(User user, Rating rating) {
 		if(user.getDriversRating() == null) {
 			List<Rating> driversRating = new ArrayList<Rating>();
 			driversRating.add(rating);
@@ -175,7 +176,7 @@ public class AccountService implements AccountBoundaryInterface, RatingBoundaryI
 		return RatingMapper.INSTANCE.toRateAccountResponseDto(rating);
 	}
 	
-	private RateAccountSidResponse addRatingForRider(User user, Rating rating) {
+	RateAccountSidResponse addRatingForRider(User user, Rating rating) {
 		if(user.getRidersRating() == null) {
 			List<Rating> ridersRating = new ArrayList<Rating>();
 			ridersRating.add(rating);

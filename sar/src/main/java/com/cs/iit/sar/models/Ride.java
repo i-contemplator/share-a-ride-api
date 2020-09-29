@@ -88,4 +88,9 @@ public class Ride {
 		this.conditions = conditions;
 	}
 
+	@Override
+	public String toString() {
+		return "Ride [rid=" + rid + ", aid=" + aid + "]";
+	}
+
 }

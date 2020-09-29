@@ -28,12 +28,13 @@ public class User {
 	private int totalRidesAsRider;    
 	private int totalRidesAsDriver;   
 
-	public User(Integer aid, String firstName, String lastName, String phone, Boolean active) {
+	public User(Integer aid, String firstName, String lastName, String phone, String picture, Boolean active) {
 		super();
 		this.aid = aid;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
+		this.picture = picture;
 		this.active = active;
 	}
 	
@@ -113,5 +114,4 @@ public class User {
 		}
 		this.active = active;
 	}
-
 }

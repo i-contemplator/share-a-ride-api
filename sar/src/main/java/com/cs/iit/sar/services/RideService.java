@@ -124,7 +124,7 @@ public class RideService implements RideBoundaryInterface,
 		return addRequestToRide(ride, joinRequest);	
 	}
 	
-	private JoinRequestJidResponse addRequestToRide(Ride ride, JoinRequest joinRequest) {
+	JoinRequestJidResponse addRequestToRide(Ride ride, JoinRequest joinRequest) {
 		if(ride.getJoinRequests() == null) {
 			Map<Integer, JoinRequest> rideJoinRequests = new HashMap<Integer, JoinRequest>();
 			rideJoinRequests.put(joinRequest.getJid(), joinRequest);
@@ -216,10 +216,13 @@ public class RideService implements RideBoundaryInterface,
 		
 		Ride ride = ridesMap.get(rid);
 		ViewMessagesResponse messagesResponse = MessageMapper.INSTANCE.toAllMessagesDto(ride);
-		return new ArrayList<>(messagesResponse.getMessages());
+		if(messagesResponse.getMessages() != null) {
+			return new ArrayList<>(messagesResponse.getMessages());
+		}
+		return new ArrayList<>();
 	}
 	
-	private List<RideResponse> searchFromToDate(String from, String to, String date) {
+	 List<RideResponse> searchFromToDate(String from, String to, String date) {
 		List<Ride> matchedRides = new ArrayList<Ride>();
 		for(Map.Entry<Integer, Ride> ride : ridesMap.entrySet()) {
 			Ride currentRide = ride.getValue();
@@ -235,6 +238,7 @@ public class RideService implements RideBoundaryInterface,
 		ViewRides rides = new ViewRides();
 		rides.setRides(matchedRides);
 		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+
 		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
@@ -250,7 +254,9 @@ public class RideService implements RideBoundaryInterface,
 			}
 		}
 		ViewRides rides = new ViewRides();
+		rides.setRides(matchedRides);
 		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+
 		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
@@ -266,7 +272,9 @@ public class RideService implements RideBoundaryInterface,
 			}
 		}
 		ViewRides rides = new ViewRides();
+		rides.setRides(matchedRides);
 		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+
 		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
@@ -282,7 +290,9 @@ public class RideService implements RideBoundaryInterface,
 			}
 		}
 		ViewRides rides = new ViewRides();
+		rides.setRides(matchedRides);
 		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+
 		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
@@ -296,7 +306,9 @@ public class RideService implements RideBoundaryInterface,
 			}
 		}
 		ViewRides rides = new ViewRides();
+		rides.setRides(matchedRides);
 		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+
 		return new ArrayList<>(ridesResponse.getRides());
 	}
 
@@ -310,7 +322,9 @@ public class RideService implements RideBoundaryInterface,
 			}
 		}
 		ViewRides rides = new ViewRides();
+		rides.setRides(matchedRides);
 		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+
 		return new ArrayList<>(ridesResponse.getRides());
 	}
 	
@@ -324,7 +338,9 @@ public class RideService implements RideBoundaryInterface,
 			}
 		}
 		ViewRides rides = new ViewRides();
+		rides.setRides(matchedRides);
 		ViewRidesResponse ridesResponse = RideMapper.INSTANCE.toViewRidesDto(rides);
+
 		return new ArrayList<>(ridesResponse.getRides());
 	}
 

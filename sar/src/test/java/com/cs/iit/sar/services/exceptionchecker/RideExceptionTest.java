@@ -44,8 +44,8 @@ class RideExceptionTest extends RideException{
 		ridesMap = DataClass.getRidesMap();
 		joinRequestsMap = DataClass.getJoinRequestsMap();
 		
-		userDriver = new User(1, "Chintan", "Patel", "333-333-3334", true);
-		userRider = new User(2, "Tejasvi", "Patel", "333-332-2343", true);
+		userDriver = new User(1, "Chintan", "Patel", "333-333-3334", "chintan.com", true);
+		userRider = new User(2, "Tejasvi", "Patel", "333-332-2343", "chintan.com", true);
 		
 		location = new LocationInfo("Chicago", "60640", "Chicago", "60616");
 		dateTime = new DateTime("13-May-2020", "23:33");
@@ -73,6 +73,7 @@ class RideExceptionTest extends RideException{
 	void cleanUp() {
 		usersMap.clear();
 		ridesMap.clear();
+		joinRequestsMap.clear();
 	}
 	
 	@Test

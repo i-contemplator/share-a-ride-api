@@ -79,8 +79,7 @@ public class ReportService implements ReportBoundaryInterface {
 		//ride, start, end, details,
 		for(Ride ride : ridesMap.values()) {
 			Date rideDate = getRideDate(ride.getDateTime().getDate());
-			if((rideDate.after(start) || rideDate.equals(start))
-					&& (rideDate.before(end) || rideDate.equals(end))) {
+			if(isDateInRange(rideDate, start, end)) {
 				
 				String fromZip = ride.getLocationInfo().getFromZip();
 				String toZip = ride.getLocationInfo().getToZip();
@@ -94,7 +93,7 @@ public class ReportService implements ReportBoundaryInterface {
 					details.add(detail);
 				} else {
 					for(ReportDetail detail : details) {
-						if(detail.getFromZip().equals(fromZip) && detail.getToZip().equals(toZip)) {
+						if(isFromToZipMatch(detail, fromZip, toZip)) {
 							count = detail.getCount();
 							detail.setCount(++count);
 							isMatch = true;
@@ -133,9 +132,7 @@ public class ReportService implements ReportBoundaryInterface {
 		
 		for(Ride ride : ridesMap.values()) {
 			Date rideDate = getRideDate(ride.getDateTime().getDate());
-			if((rideDate.after(start) || rideDate.equals(start)) 
-					&& (rideDate.before(end) || rideDate.equals(end))
-					&& ride.isTripCompleted()) {
+			if(isDateInRange(rideDate, start, end, ride.isTripCompleted())) {
 				
 				String fromZip = ride.getLocationInfo().getFromZip();
 				String toZip = ride.getLocationInfo().getToZip();
@@ -149,7 +146,7 @@ public class ReportService implements ReportBoundaryInterface {
 					details.add(detail);
 				} else {
 					for(ReportDetail detail : details) {
-						if(detail.getFromZip().equals(fromZip) && detail.getToZip().equals(toZip)) {
+						if(isFromToZipMatch(detail, fromZip, toZip)) {
 							count = detail.getCount();
 							detail.setCount(++count);
 							isMatch = true;
@@ -172,14 +169,38 @@ public class ReportService implements ReportBoundaryInterface {
 		return report;
 	}
 	
-	private String ifEmptyDate(String date) {
+	boolean isDateInRange(Date rideDate, Date start, Date end) {
+		if((rideDate.after(start) || rideDate.equals(start)) 
+					&& (rideDate.before(end) || rideDate.equals(end)))	{
+			return true;
+		}
+		return false;
+	}
+	
+	boolean isDateInRange(Date rideDate, Date start, Date end, boolean isRideCompleted) {
+		if((rideDate.after(start) || rideDate.equals(start)) 
+					&& (rideDate.before(end) || rideDate.equals(end))
+					&& isRideCompleted)	{
+			return true;
+		}
+		return false;
+	}
+	
+	boolean isFromToZipMatch(ReportDetail detail, String fromZip, String toZip) {
+		if(detail.getFromZip().equals(fromZip) && detail.getToZip().equals(toZip)) {
+			return true;
+		}
+		return false;
+	}
+	
+	String ifEmptyDate(String date) {
 		if(date == null || date.isBlank()) {
 			return "";
 		}
 		return date;
 	}
 
-	private Date getStartDateForReport(String start) throws ParseException {
+	Date getStartDateForReport(String start) throws ParseException {
 		if(start == null || start.isBlank()) {
 			return new Date(Long.MIN_VALUE);
 		}
@@ -187,7 +208,7 @@ public class ReportService implements ReportBoundaryInterface {
 		return dateFormat.parse(start);
 	}
 	
-	private Date getEndDateForReport(String end) throws ParseException {
+	Date getEndDateForReport(String end) throws ParseException {
 		if(end == null || end.isBlank()) {
 			return new Date(Long.MAX_VALUE);
 		} 
