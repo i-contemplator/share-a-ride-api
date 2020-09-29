@@ -20,6 +20,7 @@ public class RideException {
 	}
 	
 	public static void checkUpdateRide(int rid, Ride ride) {
+
 		RideValidation.validateAid(ride.getAid());
 		RideValidation.validateCreatorOfRide(ride.getAid(), rid);
 		RideValidation.validateLocationInfo(ride.getLocationInfo());
@@ -41,6 +42,8 @@ public class RideException {
 		RideValidation.validateRid(rid);
 		RideValidation.validateAid(joinRequest.getAid());
 		JoinRequestValidation.validatePassengersToJoin(joinRequest.getPassengers(), rid);
+		JoinRequestValidation.validateNotNullForRideConfirmed(joinRequest.getRideConfirmed());
+		JoinRequestValidation.validateNotNullForPickupPassenger(joinRequest.getPickupConfirmed());
 	}
 	
 	public static void checkRespondToRideRequest(int rid, int jid, JoinRequestRequest patchRideRequest) {

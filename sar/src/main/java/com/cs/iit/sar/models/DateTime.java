@@ -21,7 +21,7 @@ public class DateTime {
 			throw new NullPointerException("date appears to be null");
 		}
 		if(date.isBlank()) {
-			throw new FieldDataMissingException("date appears to be null");
+			throw new FieldDataMissingException("date appears to be missing");
 		}
 		this.date = date;
 	}
@@ -31,7 +31,7 @@ public class DateTime {
 			throw new NullPointerException("time appears to be null");
 		}
 		if(time.isBlank()) {
-			throw new FieldDataMissingException("time appears to be null");
+			throw new FieldDataMissingException("time appears to be missing");
 		}
 		this.time = time;
 	}

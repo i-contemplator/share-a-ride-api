@@ -110,7 +110,7 @@ public class User {
 	
 	public void setActive(Boolean active) {
 		if(active == null) {
-			throw new NullPointerException("The phone number appears to be uninitialized");
+			throw new NullPointerException("is_active appears to be uninitialized");
 		}
 		this.active = active;
 	}

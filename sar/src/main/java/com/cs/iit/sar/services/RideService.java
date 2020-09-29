@@ -42,13 +42,14 @@ public class RideService implements RideBoundaryInterface,
 	private Map<Integer, User> usersMap = DataClass.getUsersMap();
 	
 	public CreateRideRidResponse createRide(RideRequest rideRequest) {
+		
+		int rid = UniqueIdGenerator.generateUniqueID();
+		rideRequest.setRid(rid);
+		
 		Ride ride = RideMapper.INSTANCE.fromRideRequestDto(rideRequest);
 
 		RideException.checkCreateRide(ride);
-		
-		int rid = UniqueIdGenerator.generateUniqueID();
-		ride.setRid(rid);
-		
+				
 		ridesMap.put(rid, ride);
 		return RideMapper.INSTANCE.toCreateRideResponseDto(ride);
 	}
@@ -56,8 +57,10 @@ public class RideService implements RideBoundaryInterface,
 	public void updateRide(int rid, RideRequest rideRequest) {
 		Ride ride = RideMapper.INSTANCE.fromRideRequestDto(rideRequest);
 		
+		System.out.println(rideRequest.getAid() + " " + rideRequest.getRid());
+
 		RideException.checkUpdateRide(rid, ride);
-		
+				
 		ridesMap.put(rid, ride);
 	}
 

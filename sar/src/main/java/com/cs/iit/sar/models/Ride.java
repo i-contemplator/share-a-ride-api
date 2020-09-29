@@ -48,7 +48,7 @@ public class Ride {
 	
 	public void setLocationInfo(LocationInfo locationInfo) {
 		if(locationInfo == null) {
-			throw new NullPointerException(" location_info appears to be null");
+			throw new NullPointerException("location_info appears to be null");
 		}
 		this.locationInfo = locationInfo;
 	}
@@ -76,7 +76,7 @@ public class Ride {
 	
 	public void setAmountPerPassenger(Double amountPerPassenger) {
 		if(amountPerPassenger == null) {
-			throw new NullPointerException("amountPerPassenger appears to be null");
+			throw new NullPointerException("amount_per_passenger appears to be null");
 		}
 		this.amountPerPassenger = amountPerPassenger;
 	}
@@ -86,11 +86,6 @@ public class Ride {
 			throw new NullPointerException("conditions appears to be null");
 		}
 		this.conditions = conditions;
-	}
-
-	@Override
-	public String toString() {
-		return "Ride [rid=" + rid + ", aid=" + aid + "]";
 	}
 
 }

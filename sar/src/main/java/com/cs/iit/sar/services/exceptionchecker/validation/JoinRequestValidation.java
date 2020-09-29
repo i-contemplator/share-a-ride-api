@@ -38,6 +38,18 @@ public class JoinRequestValidation {
 		}
 	}
 	
+	public static void validateNotNullForRideConfirmed(Boolean rideConfirmed) {
+		if(rideConfirmed != null) {
+			throw new FieldDataInvalidException("Invalid value for ride_confirmed");
+		}
+	}
+	
+	public static void validateNotNullForPickupPassenger(Boolean pickupConfirmed) {
+		if(pickupConfirmed != null) {
+			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
+		}
+	}
+	
 	public static void validateRideCreator(Integer rid, Integer patchId) {
 		Ride ride = ridesMap.get(rid);
 		if(ride.getAid() != patchId) {
@@ -46,7 +58,7 @@ public class JoinRequestValidation {
 	}
 	
 	public static void validatePickupConfirmed(Boolean pickupConfirmed) {
-		if(pickupConfirmed == false) {
+		if(pickupConfirmed != true) {
 			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
 		}
 	}

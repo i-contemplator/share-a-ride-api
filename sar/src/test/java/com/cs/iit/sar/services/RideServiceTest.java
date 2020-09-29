@@ -100,7 +100,7 @@ class RideServiceTest extends RideService{
 		
 		service.createRide(ride);
 		service.createRide(rideSecond);
-		Ride ride = ridesMap.get(1);
+		System.out.println("First: " + rideSecond.getAid() + " " + rideSecond.getRid());
 	}
 	
 	@Test
@@ -186,6 +186,16 @@ class RideServiceTest extends RideService{
 	@Order(10)
 	void testSearchRides_FromToDateNotBlank_Successful() {
 		service.searchRides("Chicago", "Chicago", "13-May-2020");
+	}
+	@Test
+	@Order(10)
+	void testSearchRides_FromToDateNotBlankAndToNotMatch_Successful() {
+		service.searchRides("Chicago", "CCC", "13-May-2020");
+	}
+	@Test
+	@Order(10)
+	void testSearchRides_FromToDateNotBlankAndDateNotMatch_Successful() {
+		service.searchRides("Chicago", "Chicago", "13-May-2017");
 	}
 	@Test
 	@Order(10)

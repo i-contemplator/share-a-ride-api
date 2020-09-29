@@ -45,15 +45,4 @@ public class JoinRequest {
 		this.passengers = passengers;
 	}
 	
-	public void setRideConfirmed(Boolean rideConfirmed) {
-		this.rideConfirmed = rideConfirmed;
-	}
-	
-	public void setPassengers(Boolean pickupConfirmed) {
-		if(pickupConfirmed != null) {
-			throw new FieldDataInvalidException("Invalid value for pickup_confirmed");
-		}
-		this.pickupConfirmed = pickupConfirmed;
-	}
-	
 }

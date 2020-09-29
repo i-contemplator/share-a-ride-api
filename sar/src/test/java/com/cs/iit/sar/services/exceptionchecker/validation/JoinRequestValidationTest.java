@@ -99,6 +99,34 @@ class JoinRequestValidationTest extends JoinRequestValidation{
 	}
 	
 	@Test
+	void validateNotNullForRideConfirmed_RideConfirmedShouldBeNull_NoException() {
+		
+		assertDoesNotThrow(() -> JoinRequestValidation.validateNotNullForRideConfirmed(null));
+	}
+	
+	@Test
+	void validateNotNullForRideConfirmed_RideConfirmedShouldBeNotNull_ExceptionThrown() {
+		
+		FieldDataInvalidException exception = assertThrows(FieldDataInvalidException.class,
+				() -> JoinRequestValidation.validateNotNullForRideConfirmed(false));
+		assertTrue(exception.getMessage().equals("Invalid value for ride_confirmed"));
+	}
+	
+	@Test
+	void validateNotNullForPickupConfirmed_PickupConfirmedShouldBeNull_NoException() {
+		
+		assertDoesNotThrow(() -> JoinRequestValidation.validateNotNullForPickupPassenger(null));
+	}
+	
+	@Test
+	void validateNotNullForPickupConfirmed_PickupConfirmedShouldBeNotNull_ExceptionThrown() {
+		
+		FieldDataInvalidException exception = assertThrows(FieldDataInvalidException.class,
+				() -> JoinRequestValidation.validateNotNullForPickupPassenger(false));
+		assertTrue(exception.getMessage().equals("Invalid value for pickup_confirmed"));
+	}
+	
+	@Test
 	void validateNullForRideConfirmed_RideConfirmedShouldBeNull_ExceptionThrown() {
 		
 		NullPointerException exception = assertThrows(NullPointerException.class,
