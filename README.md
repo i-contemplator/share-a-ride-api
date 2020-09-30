@@ -122,8 +122,9 @@ sudo vim /opt/tomcat/conf/tomcat-users.xml
 ```
 sudo systemctl restart tomcat
 ```
+* Check this link more information on how to install Tomcat: https://phoenixnap.com/kb/how-to-install-tomcat-ubuntu
 * You are now ready to build the maven project and deploy it to tomcat server.
-  
+
 
 ## Build & Deploy Instructions
 ## Copyright and licensing instructions
