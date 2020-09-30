@@ -114,20 +114,69 @@ sudo vim /opt/tomcat/conf/tomcat-users.xml
 ```
 * In the tomcat-users.xml, add this lines inside <tomcat-users>.
 ```
-<role rolename="admin-gui"/>
-<role rolename="manager-gui"/>
-<user username="tomcat" password="tomcat" roles="admin-gui,manager-gui"/>
+<tomcat-users>
+  <role rolename="admin-gui"/>
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <user username="tomcat" password="tomcat" roles="admin-gui,manager-gui, manager-script"/>
+</tomcat-users>
 ```
-* Restart the server to change the effect
+* Restart the server to apply the changes.
 ```
 sudo systemctl restart tomcat
 ```
 * Check this link more information on how to install Tomcat: https://phoenixnap.com/kb/how-to-install-tomcat-ubuntu
-* You are now ready to build the maven project and deploy it to tomcat server.
-
-
+* Lets change the maven settings to connect it to use the tomcat server. 
+* First, go to maven installation directory. You can check your installation directory by:
+```
+  mvn -version
+```
+* Find the settings.xml file. Usually in conf/. Open the file and paste this. Make sure the id, username and password matches.
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<settings ...>
+  <servers>
+    <server>
+      <id>TomcatServer</id>
+      <username>tomcat</username>
+      <password>tomcat</password>
+    </server>
+  </servers>
+</settings>
+```
+* All the configuration and installation are done. We can now build and deploy the war file using maven.
+  
 ## Build & Deploy Instructions
+* Unzip this project
+* Go inside the folder where pom.xml is located
+* Clean the project
+```
+mvn clean
+```
+* Build the war file
+```
+mvn install
+```
+* Deploy the war file to the tomcat server. Make sure the server is on (follow commands given above)
+```
+mvn tomcat7:deploy
+```
+* We can now test the project. If we want to redeploy, then
+```
+mvn tomcat7:redeploy
+```
+* Once done testing, we can remove the war file from the server using:
+```
+mvn tomcat7:undeploy
+```
+* To get the Jacoco unit test coverage, run this command after building the project.
+```
+mvn jacoco:report
+```
+* To Jacoco test coverage report is located in /target/site/jacoco/index.html
+
 ## Copyright and licensing instructions
+
 ## Known bugs
 ## Credits and acknowledgements
 Unzip my file.
