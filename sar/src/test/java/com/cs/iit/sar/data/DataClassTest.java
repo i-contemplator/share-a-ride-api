@@ -1,12 +1,6 @@
 package com.cs.iit.sar.data;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
-import com.cs.iit.sar.models.User;
 
 class DataClassTest extends DataClass{
 

@@ -1,7 +1,5 @@
 package com.cs.iit.sar.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
@@ -20,10 +18,7 @@ import com.cs.iit.sar.dto.request.RideRequest;
 import com.cs.iit.sar.dto.response.CarResponse;
 import com.cs.iit.sar.dto.response.DateTimeResponse;
 import com.cs.iit.sar.dto.response.LocationInfoResponse;
-import com.cs.iit.sar.models.Car;
-import com.cs.iit.sar.models.DateTime;
 import com.cs.iit.sar.models.JoinRequest;
-import com.cs.iit.sar.models.LocationInfo;
 import com.cs.iit.sar.models.Message;
 import com.cs.iit.sar.models.Ride;
 import com.cs.iit.sar.models.User;

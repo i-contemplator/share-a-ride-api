@@ -20,7 +20,6 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-    	System.out.println("Hello");
-        return "Got it!";
+        return "Share-A-Ride Rest Api Documentation";
     }
 }

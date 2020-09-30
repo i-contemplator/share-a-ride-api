@@ -2,7 +2,6 @@ package com.cs.iit.sar.dto.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 import com.cs.iit.sar.dto.request.RideRequest;
@@ -20,6 +19,7 @@ public interface RideMapper {
 	
 	CreateRideRidResponse toCreateRideResponseDto(Ride ride);
 	
+	@Mapping(target = "tripCompleted", ignore = true)
 	@Mapping(target = "joinRequests", ignore = true)
 	@Mapping(target = "messages", ignore = true)
 	@Mapping(target = "rid", ignore = true)

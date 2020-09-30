@@ -1,7 +1,5 @@
 package com.cs.iit.sar.services.exceptionchecker;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
@@ -17,7 +15,6 @@ import com.cs.iit.sar.models.DateTime;
 import com.cs.iit.sar.models.JoinRequest;
 import com.cs.iit.sar.models.LocationInfo;
 import com.cs.iit.sar.models.Message;
-import com.cs.iit.sar.models.Rating;
 import com.cs.iit.sar.models.Ride;
 import com.cs.iit.sar.models.User;
 

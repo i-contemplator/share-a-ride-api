@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Order;
 import com.cs.iit.sar.data.DataClass;
 import com.cs.iit.sar.dto.request.AccountRequest;
 import com.cs.iit.sar.dto.request.RateAccountRequest;
-import com.cs.iit.sar.dto.response.AccountResponse;
 import com.cs.iit.sar.dto.response.CreateAccountAidResponse;
 import com.cs.iit.sar.models.Rating;
 import com.cs.iit.sar.models.Ride;

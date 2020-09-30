@@ -1,7 +1,5 @@
 package com.cs.iit.sar.services.exceptionchecker;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;

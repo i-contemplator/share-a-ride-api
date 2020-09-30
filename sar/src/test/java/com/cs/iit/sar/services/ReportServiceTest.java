@@ -2,9 +2,7 @@ package com.cs.iit.sar.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -18,13 +16,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import com.cs.iit.sar.data.DataClass;
-import com.cs.iit.sar.dto.request.RideRequest;
-import com.cs.iit.sar.dto.response.CarResponse;
-import com.cs.iit.sar.dto.response.DateTimeResponse;
-import com.cs.iit.sar.dto.response.LocationInfoResponse;
 import com.cs.iit.sar.models.Car;
 import com.cs.iit.sar.models.DateTime;
-import com.cs.iit.sar.models.JoinRequest;
 import com.cs.iit.sar.models.LocationInfo;
 import com.cs.iit.sar.models.Report;
 import com.cs.iit.sar.models.ReportDetail;

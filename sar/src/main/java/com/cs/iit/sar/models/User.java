@@ -3,8 +3,6 @@ package com.cs.iit.sar.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.json.bind.annotation.JsonbNillable;
-import javax.json.bind.annotation.JsonbProperty;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.cs.iit.sar.exception.FieldDataInvalidException;
