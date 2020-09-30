@@ -176,15 +176,5 @@ mvn jacoco:report
 * To Jacoco test coverage report is located in /target/site/jacoco/index.html
 
 ## Copyright and licensing instructions
-
 ## Known bugs
 ## Credits and acknowledgements
-Unzip my file.
-Go to either problem-4 or problem-5 folder on the terminal.
-Run these commands to clean the previous build in your terminal, install the package in your local system, and test the program. 
-```
-mvn clean 
-mvn install   
-mvn test
-```
-
