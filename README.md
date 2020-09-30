@@ -29,7 +29,7 @@ sudo apt install maven
 ```
 mvn -version
 ```
-* To download Tomcat 9, First create a new group and system user in your system to run the tomcat server
+* To download Tomcat 9, First create a new group and system user in Ubuntu to run the tomcat server
 ```
 sudo groupadd tomcat
 sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
@@ -64,7 +64,7 @@ dirname $(dirname $(readlink -f $(which javac)))
 ```
 sudo vim /etc/systemd/system/tomcat.service
 ```
-* Paste this in that file and add your "JAVA_HOME" value you got before. Save the file.
+* Paste this in that file and add "JAVA_HOME" value that we got before. Save the file.
 ```
 [Unit]
 Description=Apache Tomcat Web Application Container
@@ -176,5 +176,33 @@ mvn jacoco:report
 * To Jacoco test coverage report is located in /target/site/jacoco/index.html
 
 ## Copyright and licensing instructions
+MIT License
+
+Copyright (c) 2020 Chintan Patel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 ## Known bugs
+Bugs will be added as founded.
+
 ## Credits and acknowledgements
+Motivation to do this project came from CS 445 class (Object Oriented Programming Paradigm and Design class). The project was started in March 2020, and submitted in September 2020. Thank you Prof. Virgil Bistriceanu for allowing me to work on this idea. More information about this project is here: http://www.cs.iit.edu/~virgil/cs445/. Contributors to this free software will be highlighted here.
+#### Developer of Share A Ride Rest API:
+###### Chintan Patel
+###### Illinois Institute of Technology
