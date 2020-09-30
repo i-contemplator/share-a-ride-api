@@ -21,7 +21,7 @@ class JoinRequestTest {
 	
 	@Test
 	void testSetAid_AidShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> joinRequest.setAid(null));
 		assertTrue(e.getMessage().equals("aid appears to be null"));
 	}
@@ -33,7 +33,7 @@ class JoinRequestTest {
 	
 	@Test
 	void testSetPassengers_PassengersShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> joinRequest.setPassengers(null));
 		assertTrue(e.getMessage().equals("passengers appears to be null"));
 	}

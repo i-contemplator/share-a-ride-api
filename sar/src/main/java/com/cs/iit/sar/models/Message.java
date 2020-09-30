@@ -1,5 +1,6 @@
 package com.cs.iit.sar.models;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 import lombok.Getter;
@@ -22,14 +23,14 @@ public class Message {
 	
 	public void setAid(Integer aid) {
 		if(aid == null) {
-			throw new NullPointerException("aid appears to be null");
+			throw new FieldDataInvalidException("aid appears to be null");
 		}
 		this.aid = aid;
 	}
 	
 	public void setMsg(String msg) {
 		if(msg == null) {
-			throw new NullPointerException("msg appears to be null");
+			throw new FieldDataInvalidException("msg appears to be null");
 		}
 		if(msg.isBlank()) {
 			throw new FieldDataMissingException("msg appears to be empty");

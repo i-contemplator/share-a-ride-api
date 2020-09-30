@@ -7,11 +7,13 @@ import com.cs.iit.sar.exception.DataNotFoundException;
 import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.models.JoinRequest;
 import com.cs.iit.sar.models.Ride;
+import com.cs.iit.sar.models.User;
 
 public class JoinRequestValidation {
 
 	private static Map<Integer, Ride> ridesMap = DataClass.getRidesMap();
 	private static Map<Integer, JoinRequest> joinRequestsMap = DataClass.getJoinRequestsMap();
+	private static Map<Integer, User> usersMap = DataClass.getUsersMap();
 	
 	public static void validatePassengersToJoin(Integer passengers, Integer ridId) {
 		Ride rid = ridesMap.get(ridId);
@@ -28,13 +30,13 @@ public class JoinRequestValidation {
 	
 	public static void validateNullForAid(Integer aid) {
 		if(aid == null) {
-			throw new NullPointerException("aid appears to be null");
+			throw new FieldDataInvalidException("aid appears to be null");
 		}
 	}
 	
 	public static void validateNullForRideConfirmed(Boolean rideConfirmed) {
 		if(rideConfirmed == null) {
-			throw new NullPointerException("Invalid value for ride_confirmed");
+			throw new FieldDataInvalidException("Invalid value for ride_confirmed");
 		}
 	}
 	
@@ -67,6 +69,13 @@ public class JoinRequestValidation {
 		JoinRequest joinRequest = joinRequestsMap.get(jid);
 		if(joinRequest.getAid() != patchAid) {
 			throw new FieldDataInvalidException("This account (" + patchAid + ") has not requested to join this ride (" + rid + ")");
+		}
+	}
+	
+	public static void validateActiveAccount(Integer aid) {
+		User user = usersMap.get(aid);
+		if(!user.getActive()) {
+			throw new FieldDataInvalidException("This account (" + aid + ") is not active, may not create a join ride request.");
 		}
 	}
 }

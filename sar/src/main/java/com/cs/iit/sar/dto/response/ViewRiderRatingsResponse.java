@@ -2,6 +2,7 @@ package com.cs.iit.sar.dto.response;
 
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbProperty;
 
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonbNillable
 public class ViewRiderRatingsResponse {
 	private Integer aid;
 	@JsonbProperty("first_name")
@@ -18,7 +20,7 @@ public class ViewRiderRatingsResponse {
 	@JsonbProperty("ratings")
 	private Integer totalRatingsAsRider;
 	@JsonbProperty("average_rating")
-	private Integer averageRatingAsRider;
+	private Double averageRatingAsRider;
 	@JsonbProperty("detail")
 	private List<RatingResponse> ridersRating;
 }

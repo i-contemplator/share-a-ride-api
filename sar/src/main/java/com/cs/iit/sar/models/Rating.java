@@ -1,5 +1,7 @@
 package com.cs.iit.sar.models;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,21 +27,21 @@ public class Rating {
 	}
 	public void setRid(Integer rid) {
 		if(rid == null) {
-			throw new NullPointerException("rid appears to be null");
+			throw new FieldDataInvalidException("rid appears to be null");
 		}
 		this.rid = rid;
 	}
 	
 	public void setSentById(Integer sentById) {
 		if(sentById == null) {
-			throw new NullPointerException("sent_by_id appears to be null");
+			throw new FieldDataInvalidException("sent_by_id appears to be null");
 		}
 		this.sentById = sentById;
 	}
 	
 	public void setRating(Integer rating) {
 		if(rating == null) {
-			throw new NullPointerException("rating appears to be null");
+			throw new FieldDataInvalidException("rating appears to be null");
 		}
 		this.rating = rating;
 	}

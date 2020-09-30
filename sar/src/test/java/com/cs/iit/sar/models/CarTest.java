@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -21,7 +22,7 @@ class CarTest {
 	
 	@Test
 	void testSetMake_MakeShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> car.setMake(null));
 		assertTrue(e.getMessage().equals("car make appears to be null"));
 	}
@@ -40,7 +41,7 @@ class CarTest {
 
 	@Test
 	void testSetModel_ModelShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> car.setModel(null));
 		assertTrue(e.getMessage().equals("car model appears to be null"));
 	}
@@ -59,7 +60,7 @@ class CarTest {
 	
 	@Test
 	void testSetColor_ColorShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> car.setColor(null));
 		assertTrue(e.getMessage().equals("car color appears to be null"));
 	}
@@ -78,7 +79,7 @@ class CarTest {
 	
 	@Test
 	void testSetPlateState_PlateStateShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> car.setPlateState(null));
 		assertTrue(e.getMessage().equals("car plate_state appears to be null"));
 	}
@@ -97,7 +98,7 @@ class CarTest {
 	
 	@Test
 	void testSetPlateSerial_PlateSerialShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> car.setPlateSerial(null));
 		assertTrue(e.getMessage().equals("car plate_serial appears to be null"));
 	}

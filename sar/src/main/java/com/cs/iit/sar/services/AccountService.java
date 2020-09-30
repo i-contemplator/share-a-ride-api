@@ -141,10 +141,8 @@ public class AccountService implements AccountBoundaryInterface, RatingBoundaryI
 		rating.setSid(sid);
 		rating.setDate(DateCreated.getDateOrTime("dd-MMM-yyyy"));
 		rating.setFirstName(userSender.getFirstName());
-			
 		if(isReceiverDriver) {
 			return addRatingForDriver(userReceiver, rating);
-			
 		} else {
 			return addRatingForRider(userReceiver, rating);
 		}
@@ -165,7 +163,7 @@ public class AccountService implements AccountBoundaryInterface, RatingBoundaryI
 	}
 
 	RateAccountSidResponse addRatingForDriver(User user, Rating rating) {
-		if(user.getDriversRating() == null) {
+		if(user.getDriversRating().isEmpty()) {
 			List<Rating> driversRating = new ArrayList<Rating>();
 			driversRating.add(rating);
 			user.setDriversRating(driversRating);
@@ -177,7 +175,7 @@ public class AccountService implements AccountBoundaryInterface, RatingBoundaryI
 	}
 	
 	RateAccountSidResponse addRatingForRider(User user, Rating rating) {
-		if(user.getRidersRating() == null) {
+		if(user.getRidersRating().isEmpty()) {
 			List<Rating> ridersRating = new ArrayList<Rating>();
 			ridersRating.add(rating);
 			user.setRidersRating(ridersRating);

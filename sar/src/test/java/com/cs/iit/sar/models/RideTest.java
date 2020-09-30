@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
+
 @TestInstance(Lifecycle.PER_CLASS)
 class RideTest {
 	
@@ -19,7 +21,7 @@ class RideTest {
 
 	@Test
 	void testSetAid_AidShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> ride.setAid(null));
 		assertTrue(e.getMessage().equals("aid appears to be null"));
 	}
@@ -31,7 +33,7 @@ class RideTest {
 	
 	@Test
 	void testSetLocationInfo_LocationInfoShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> ride.setLocationInfo(null));
 		assertTrue(e.getMessage().equals("location_info appears to be null"));
 	}
@@ -44,7 +46,7 @@ class RideTest {
 	
 	@Test
 	void testSetDateTime_DateTimeShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> ride.setDateTime(null));
 		assertTrue(e.getMessage().equals("date_time appears to be null"));
 	}
@@ -57,7 +59,7 @@ class RideTest {
 	
 	@Test
 	void testSetCarInfo_CarInfoShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> ride.setCarInfo(null));
 		assertTrue(e.getMessage().equals("car_info appears to be null"));
 	}
@@ -70,7 +72,7 @@ class RideTest {
 	
 	@Test
 	void testSetMaxPassengers_MaxPassengersShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> ride.setMaxPassengers(null));
 		assertTrue(e.getMessage().equals("max_passengers appears to be null"));
 	}
@@ -82,7 +84,7 @@ class RideTest {
 	
 	@Test
 	void testSetAmountPerPassenger_AmountPerPassengerShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> ride.setAmountPerPassenger(null));
 		assertTrue(e.getMessage().equals("amount_per_passenger appears to be null"));
 	}
@@ -94,7 +96,7 @@ class RideTest {
 	
 	@Test
 	void testSetConditions_ConditionsShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> ride.setConditions(null));
 		assertTrue(e.getMessage().equals("conditions appears to be null"));
 	}

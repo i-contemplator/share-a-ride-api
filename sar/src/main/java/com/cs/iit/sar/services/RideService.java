@@ -43,13 +43,13 @@ public class RideService implements RideBoundaryInterface,
 	
 	public CreateRideRidResponse createRide(RideRequest rideRequest) {
 		
-		int rid = UniqueIdGenerator.generateUniqueID();
-		rideRequest.setRid(rid);
-		
 		Ride ride = RideMapper.INSTANCE.fromRideRequestDto(rideRequest);
 
 		RideException.checkCreateRide(ride);
 				
+		int rid = UniqueIdGenerator.generateUniqueID();
+		ride.setRid(rid);
+		
 		ridesMap.put(rid, ride);
 		return RideMapper.INSTANCE.toCreateRideResponseDto(ride);
 	}

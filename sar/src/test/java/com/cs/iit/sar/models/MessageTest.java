@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -21,7 +22,7 @@ class MessageTest {
 	
 	@Test
 	void testSetAid_AidShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class, 
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class, 
 				() -> message.setAid(null));
 		assertTrue(e.getMessage().equals("aid appears to be null"));
 	}
@@ -33,7 +34,7 @@ class MessageTest {
 	
 	@Test
 	void testSetMsg_MsgShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> message.setMsg(null));
 		assertTrue(e.getMessage().equals("msg appears to be null"));
 	}

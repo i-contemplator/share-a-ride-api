@@ -2,6 +2,7 @@ package com.cs.iit.sar.dto.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 import com.cs.iit.sar.dto.request.RideRequest;

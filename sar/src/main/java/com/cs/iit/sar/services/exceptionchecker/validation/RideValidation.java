@@ -24,10 +24,9 @@ public class RideValidation {
 			throw new FieldDataInvalidException("Invalid aid");
 		}
 	}
-	
+
 	public static void validateLocationInfo(LocationInfo locationInfo) {
 		validateFromZip(locationInfo.getFromZip());
-		validateToZip(locationInfo.getToZip());
 	}
 	
 	static void validateFromZip(String fromZip) {
@@ -37,6 +36,9 @@ public class RideValidation {
 	}
 	
 	static void validateToZip(String toZip) {
+		if(toZip.isBlank()) {
+			return;
+		}
 		if(toZip.length() != 5) {
 			throw new FieldDataInvalidException("Invalid to_zip");
 		}
@@ -87,7 +89,7 @@ public class RideValidation {
 	}
 	
 	public static void validateAmountPerPassenger(Double amount) {
-		if(amount <= 0) {
+		if(amount < 0) {
 			throw new FieldDataInvalidException("Invalid amount_per_passenger");
 		}
 	}

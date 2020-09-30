@@ -1,5 +1,6 @@
 package com.cs.iit.sar.models;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 import lombok.AccessLevel;
@@ -20,7 +21,7 @@ public class LocationInfo {
 	
 	public void setFromCity(String fromCity) {
 		if(fromCity == null) {
-			throw new NullPointerException("from_city appears to be null");
+			throw new FieldDataInvalidException("from_city appears to be null");
 		}
 		if(fromCity.isBlank()) {
 			throw new FieldDataMissingException("from_city appears to be empty");
@@ -30,7 +31,7 @@ public class LocationInfo {
 	
 	public void setToCity(String toCity) {
 		if(toCity == null) {
-			throw new NullPointerException("to_city appears to be null");
+			throw new FieldDataInvalidException("to_city appears to be null");
 		}
 		if(toCity.isBlank()) {
 			throw new FieldDataMissingException("to_city appears to be empty");

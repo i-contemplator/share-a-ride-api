@@ -83,7 +83,6 @@ public class RideResource {
 	@Path("{rid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public RideDetailResponse getRide(@PathParam("rid") int rid) {
-		System.out.println("in getRide resource");
 		return rideService.getRide(rid);
 	}
 	
@@ -104,13 +103,15 @@ public class RideResource {
 	@PATCH
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{rid}/join_requests/{jid}")
-	public void respondToRideRequest(@PathParam("rid") int rid, @PathParam("jid") int jid, JoinRequestRequest patchJoinRequest) {
+	public Response respondToRideRequest(@PathParam("rid") int rid, @PathParam("jid") int jid, JoinRequestRequest patchJoinRequest) {
 		if(patchJoinRequest.getRideConfirmed() != null) {
 			joinRequestService.respondToRideRequest(rid, jid, patchJoinRequest);
 		}
 		if(patchJoinRequest.getPickupConfirmed() != null) {
 			joinRequestService.confirmPassengerPickup(rid, jid, patchJoinRequest);
 		} 
+		return Response.status(Status.OK)
+				.build();
 	} 
 	
 	@POST

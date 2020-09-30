@@ -33,14 +33,14 @@ public class JoinRequest {
 	
 	public void setAid(Integer aid) {
 		if(aid == null) {
-			throw new NullPointerException("aid appears to be null");
+			throw new FieldDataInvalidException("aid appears to be null");
 		}
 		this.aid = aid;
 	}
 	
 	public void setPassengers(Integer passengers) {
 		if(passengers == null) {
-			throw new NullPointerException("passengers appears to be null");
+			throw new FieldDataInvalidException("passengers appears to be null");
 		}
 		this.passengers = passengers;
 	}

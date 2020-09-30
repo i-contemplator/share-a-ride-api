@@ -9,7 +9,6 @@ import javax.ws.rs.ext.Provider;
 
 import com.cs.iit.sar.exception.ExceptionResponseMaker;
 
-@Provider
 public class NullPointerExceptionMapper implements ExceptionMapper<NullPointerException>{
 
 	private UriInfo uriInfo;

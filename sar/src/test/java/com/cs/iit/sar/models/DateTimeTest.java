@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -22,7 +23,7 @@ class DateTimeTest {
 	
 	@Test
 	void testSetDate_DateShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> dateTime.setDate(null));
 		assertTrue(e.getMessage().equals("date appears to be null"));
 	}
@@ -41,7 +42,7 @@ class DateTimeTest {
 	
 	@Test
 	void testSetTime_TimeShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> dateTime.setTime(null));
 		assertTrue(e.getMessage().equals("time appears to be null"));
 	}

@@ -47,7 +47,7 @@ class MessageValidationTest extends MessageValidation{
 		
 		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> MessageValidation.validateActiveAccount(2));
-		assertTrue(e.getMessage().equals("account is not active"));
+		assertTrue(e.getMessage().equals("This account (2) is not active, may not create a ride."));
 	}
 	
 

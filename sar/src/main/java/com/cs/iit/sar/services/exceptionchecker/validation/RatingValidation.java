@@ -45,7 +45,7 @@ public class RatingValidation {
 	
 	public static void validateUserPartOfRide(boolean isRider, boolean isDriver, Integer userId, Integer rid) {
 		if(!isDriver && !isRider) {
-			throw new FieldDataInvalidException("This account (" + userId + ") did't create this ride (" + rid + ") nor was it a passenger");
+			throw new FieldDataInvalidException("This account (" + userId + ") didn't create this ride (" + rid + ") nor was it a passenger");
 		}
 	}
 	

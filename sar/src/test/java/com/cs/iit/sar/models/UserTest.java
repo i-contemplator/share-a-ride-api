@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -21,7 +22,7 @@ class UserTest {
 
 	@Test
 	void testSetFirstName_NameShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> user.setFirstName(null));
 		assertTrue(e.getMessage().equals("First name appears to be null"));
 	}
@@ -40,7 +41,7 @@ class UserTest {
 	
 	@Test
 	void testSetLastName_NameShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> user.setLastName(null));
 		assertTrue(e.getMessage().equals("The last name appears to be null"));
 	}
@@ -59,7 +60,7 @@ class UserTest {
 	
 	@Test
 	void testSetPhone_PhoneShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> user.setPhone(null));
 		assertTrue(e.getMessage().equals("The phone number appears to be uninitialized"));
 	}
@@ -78,7 +79,7 @@ class UserTest {
 	
 	@Test
 	void testSetPicture_PictureShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> user.setPicture(null));
 		assertTrue(e.getMessage().equals("The picture appears to be uninitialized"));
 	}
@@ -97,7 +98,7 @@ class UserTest {
 	
 	@Test
 	void testSetActive_ActiveShouldBeNull_ExceptionThrown() {
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> user.setActive(null));
 		assertTrue(e.getMessage().equals("is_active appears to be uninitialized"));
 	}
@@ -107,4 +108,21 @@ class UserTest {
 		assertDoesNotThrow(() -> user.setActive(false));
 	}
 	
+	@Test
+	void testGetTotalRatingsAsRider_RatingIsNull_ReturnsZero() {
+		user.setRidersRating(null);
+		assertEquals(0, user.getTotalRatingsAsRider());
+	}
+	
+	@Test
+	void testGetTotalRatingsAsDriver_RatingIsNull_ReturnsZero() {
+		user.setDriversRating(null);
+		assertEquals(0, user.getTotalRatingsAsDriver());
+	}
+	
+	@Test
+	void testGetAverageRatingAsRider_RatingIsNull_ReturnsNull() {
+		user.setRidersRating(null);
+		assertEquals(null, user.getAverageRatingAsRider());
+	}
 }

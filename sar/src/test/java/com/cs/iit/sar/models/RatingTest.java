@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
+
 @TestInstance(Lifecycle.PER_CLASS)
 class RatingTest {
 
@@ -20,7 +22,7 @@ class RatingTest {
 	@Test
 	void testSetRid_RidShouldBeNull_ExceptionThrown() {
 		
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> rating.setRid(null));
 		assertTrue(e.getMessage().equals("rid appears to be null"));
 	}
@@ -33,7 +35,7 @@ class RatingTest {
 	@Test
 	void testSetSentById_SentByIdShouldBeNull_ExceptionThrown() {
 		
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> rating.setSentById(null));
 		assertTrue(e.getMessage().equals("sent_by_id appears to be null"));
 	}
@@ -46,7 +48,7 @@ class RatingTest {
 	@Test
 	void testSetRating_RatingShouldBeNull_ExceptionThrown() {
 		
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> rating.setRating(null));
 		assertTrue(e.getMessage().equals("rating appears to be null"));
 	}

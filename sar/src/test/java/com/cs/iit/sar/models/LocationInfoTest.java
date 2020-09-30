@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -22,7 +23,7 @@ class LocationInfoTest {
 	@Test
 	void testSetFromCity_FromCityShouldBeNull_ExceptionThrown() {
 		
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> location.setFromCity(null));
 		assertTrue(e.getMessage().equals("from_city appears to be null"));
 	}
@@ -42,7 +43,7 @@ class LocationInfoTest {
 	@Test
 	void testSetToCity_ToCityShouldBeNull_ExceptionThrown() {
 		
-		NullPointerException e = assertThrows(NullPointerException.class,
+		FieldDataInvalidException e = assertThrows(FieldDataInvalidException.class,
 				() -> location.setToCity(null));
 		assertTrue(e.getMessage().equals("to_city appears to be null"));
 	}

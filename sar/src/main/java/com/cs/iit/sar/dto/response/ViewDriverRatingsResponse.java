@@ -18,7 +18,7 @@ public class ViewDriverRatingsResponse {
 	@JsonbProperty("ratings")
 	private Integer totalRatingsAsDriver;
 	@JsonbProperty("average_rating")
-	private Integer averageRatingAsDriver;
+	private Double averageRatingAsDriver;
 	@JsonbProperty("detail")
 	private List<RatingResponse> driversRating;
 }

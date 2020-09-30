@@ -123,7 +123,7 @@ class RatingValidationTest extends RatingValidation{
 		
 		FieldDataInvalidException exception = assertThrows(FieldDataInvalidException.class, 
 				() -> RatingValidation.validateUserPartOfRide(false, false, 5, 2));
-		assertTrue(exception.getMessage().contains("This account (5) did't create this ride (2) nor was it a passenger"));
+		assertTrue(exception.getMessage().contains("This account (5) didn't create this ride (2) nor was it a passenger"));
 	}
 	
 	@Test

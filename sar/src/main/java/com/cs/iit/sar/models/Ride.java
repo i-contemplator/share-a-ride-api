@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,49 +43,49 @@ public class Ride {
 	
 	public void setAid(Integer aid) {
 		if(aid == null) {
-			throw new NullPointerException("aid appears to be null");
+			throw new FieldDataInvalidException("aid appears to be null");
 		}
 		this.aid = aid;
 	}
 	
 	public void setLocationInfo(LocationInfo locationInfo) {
 		if(locationInfo == null) {
-			throw new NullPointerException("location_info appears to be null");
+			throw new FieldDataInvalidException("location_info appears to be null");
 		}
 		this.locationInfo = locationInfo;
 	}
 	
 	public void setDateTime(DateTime dateTime) {
 		if(dateTime == null) {
-			throw new NullPointerException("date_time appears to be null");
+			throw new FieldDataInvalidException("date_time appears to be null");
 		}
 		this.dateTime = dateTime;
 	}
 	
 	public void setCarInfo(Car carInfo) {
 		if(carInfo == null) {
-			throw new NullPointerException("car_info appears to be null");
+			throw new FieldDataInvalidException("car_info appears to be null");
 		}
 		this.carInfo = carInfo;
 	}
 	
 	public void setMaxPassengers(Integer maxPassengers) {
 		if(maxPassengers == null) {
-			throw new NullPointerException("max_passengers appears to be null");
+			throw new FieldDataInvalidException("max_passengers appears to be null");
 		}
 		this.maxPassengers = maxPassengers;
 	}
 	
 	public void setAmountPerPassenger(Double amountPerPassenger) {
 		if(amountPerPassenger == null) {
-			throw new NullPointerException("amount_per_passenger appears to be null");
+			throw new FieldDataInvalidException("amount_per_passenger appears to be null");
 		}
 		this.amountPerPassenger = amountPerPassenger;
 	}
 	
 	public void setConditions(String conditions) {
 		if(conditions == null) {
-			throw new NullPointerException("conditions appears to be null");
+			throw new FieldDataInvalidException("conditions appears to be null");
 		}
 		this.conditions = conditions;
 	}

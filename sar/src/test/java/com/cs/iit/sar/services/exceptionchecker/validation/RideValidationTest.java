@@ -29,7 +29,9 @@ class RideValidationTest extends RideValidation{
 	void init() {
 		User user = new User();
 		usersMap = DataClass.getUsersMap();
+		user.setActive(true);
 		usersMap.put(1, user);
+		user.setActive(false);
 		usersMap.put(2, user);
 		Ride ride = new Ride();
 		ride.setAid(1);
@@ -76,6 +78,11 @@ class RideValidationTest extends RideValidation{
 	void validateToZip_ToZipShouldBeValid_Successful() {
 		
 		assertDoesNotThrow(() -> RideValidation.validateToZip("60640"));		
+	}
+	
+	@Test
+	void validateToZip_toZipShouldBeBlank_ReturnNothing() {
+		RideValidation.validateToZip("");
 	}
 	
 	@Test
@@ -213,5 +220,4 @@ class RideValidationTest extends RideValidation{
 				() -> RideValidation.validateCreatorOfRide(2, 1));
 		assertTrue(exception.getMessage().contains("Only the creator of the ride may change it"));
 	}
-
 }

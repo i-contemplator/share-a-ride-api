@@ -1,5 +1,6 @@
 package com.cs.iit.sar.models;
 
+import com.cs.iit.sar.exception.FieldDataInvalidException;
 import com.cs.iit.sar.exception.FieldDataMissingException;
 
 import lombok.AccessLevel;
@@ -18,7 +19,7 @@ public class DateTime {
 	
 	public void setDate(String date) {
 		if(date == null) {
-			throw new NullPointerException("date appears to be null");
+			throw new FieldDataInvalidException("date appears to be null");
 		}
 		if(date.isBlank()) {
 			throw new FieldDataMissingException("date appears to be missing");
@@ -28,7 +29,7 @@ public class DateTime {
 	
 	public void setTime(String time) {
 		if(time == null) {
-			throw new NullPointerException("time appears to be null");
+			throw new FieldDataInvalidException("time appears to be null");
 		}
 		if(time.isBlank()) {
 			throw new FieldDataMissingException("time appears to be missing");

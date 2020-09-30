@@ -22,6 +22,7 @@ class JoinRequestValidationTest extends JoinRequestValidation{
 
 	Map<Integer, Ride> ridesMap;
 	Map<Integer, JoinRequest> joinRequestsMap;
+	Map<Integer, User> usersMap;
 	
 	@BeforeAll
 	void init() {
@@ -34,6 +35,9 @@ class JoinRequestValidationTest extends JoinRequestValidation{
 		JoinRequest joinRequest = new JoinRequest();
 		joinRequest.setAid(1);
 		joinRequestsMap.put(1, joinRequest);
+		usersMap = DataClass.getUsersMap();
+		User user = new User(1, "Chintan", "Patel", "333-333-3333", "chintan.com", false);; 
+		usersMap.put(1, user);
 	}
 	
 	@AfterAll
@@ -87,7 +91,7 @@ class JoinRequestValidationTest extends JoinRequestValidation{
 	@Test
 	void validateNullForAid_AidShouldBeNull_ExceptionThrown() {
 		
-		NullPointerException exception = assertThrows(NullPointerException.class,
+		FieldDataInvalidException exception = assertThrows(FieldDataInvalidException.class,
 				() -> JoinRequestValidation.validateNullForAid(null));
 		assertTrue(exception.getMessage().equals("aid appears to be null"));
 	}
@@ -129,7 +133,7 @@ class JoinRequestValidationTest extends JoinRequestValidation{
 	@Test
 	void validateNullForRideConfirmed_RideConfirmedShouldBeNull_ExceptionThrown() {
 		
-		NullPointerException exception = assertThrows(NullPointerException.class,
+		FieldDataInvalidException exception = assertThrows(FieldDataInvalidException.class,
 				() -> JoinRequestValidation.validateNullForRideConfirmed(null));
 		assertTrue(exception.getMessage().equals("Invalid value for ride_confirmed"));
 	}
@@ -174,6 +178,14 @@ class JoinRequestValidationTest extends JoinRequestValidation{
 		FieldDataInvalidException exception = assertThrows(FieldDataInvalidException.class, 
 				() -> JoinRequestValidation.validateRequestor(1, 1, 5));
 		assertTrue(exception.getMessage().contains("This account (5) has not requested to join this ride (1)"));
+	}
+	
+	@Test
+	void testValidateActiveAccount_ActiveShouldBeFalse_ExceptionThrown() {
+		
+		FieldDataInvalidException exception = assertThrows(FieldDataInvalidException.class, 
+				() -> JoinRequestValidation.validateActiveAccount(1));
+		assertTrue(exception.getMessage().contains("This account (1) is not active, may not create a join ride request."));
 	}
 	
 }
