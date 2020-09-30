@@ -10,7 +10,7 @@ import com.cs.iit.sar.models.Ride;
 import com.cs.iit.sar.models.User;
 
 import lombok.Getter;
-
+//dadfaf
 public class DataClass {
 	@Getter
 	private static Map<Integer, User> usersMap = new HashMap<Integer, User>();

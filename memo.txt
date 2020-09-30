@@ -1,0 +1,26 @@
+Chintan Patel                  
+CS 445
+Final Project (Share A Ride RESTApi)
+
+Memo:
+
+1) The project passes all the requirements with the unit test coverage of 89%. This project implements all the Api rest end points given in the Project Api. It passes all the functional testing instructions given on the course website. 
+
+2) Link to github repo: https://github.com/chintanpatel2634/cs445project
+
+3) Lines of code: 2794
+
+4) Lines of unit test code: 1942
+
+5) Unit test coverage result with Jacoco: 89% Missed Instructions coverage, and 85% Missed Branches coverage. (This excludes testing for Rest controller/resources as it was very light. Also, I used Data Transfer Object (DTO) design pattern, therefore I had many classes for it. And because I used Mapstruct for mapping dto, and Lombok for getters/setters generation, they covered most of the line coverage except where I used exception handling)
+
+6) Cyclomatic complexity (Jacoco): The maximum complexity is in RideService.searchRides() method which is 7. And also in, ReportService.getReportsForRidesTaken() and ReportService.getReportForRidesPostsed() which is also 7.
+
+7) Number of hours to get project code done: Around 100 hours
+
+8) Number of hours to prepare the assignment: Around 5 hours
+
+9) Challenges:
+One of the challenges I had with the project was to get the proper response for each GET requests. As in the project API, there were some GET requests that require complicated responses. I knew how to do it with JSON libraries, but after I did my research, I found out that using JSON libraries to serialize the Java objects is a bad practise. Therefore, I decided to go with Data Transfer Object (DTO) Design pattern. With this pattern, I created Dto's for both requests and responses. This way, my api is more flexible, and if I need to change any requests or responses in the future, it would be easier to do so. Also, by using this pattern, I decoupled the business models and the models (data objects) which are only for the purpose of responses and requests. 
+The second challenge I had was reducing the boilerplate code that includes getters/setters/, Dto's setters/getters, and mapper classes. To fix this problem, I used mapstruct for mapping the Dto's to business models and vice versa. Also, for the getters/setters, I used Lombok library. And, as mapstruct and lombok works great together, it made this challenge way easier.
+
