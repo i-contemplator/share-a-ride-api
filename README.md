@@ -206,3 +206,5 @@ Motivation to do this project came from CS 445 class (Object Oriented Programmin
 #### Developer of Share A Ride Rest API:
 ###### Chintan Patel
 ###### Illinois Institute of Technology
+
+#### Contributors:
